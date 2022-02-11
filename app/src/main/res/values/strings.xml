@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Movie Searcher 2</string>
+    <!-- Main screen begin -->
+    <string name="mainPromptText">Type something in the search line below and tap the SEARCH button</string>
+    <string name="searchLineHint">Type Here</string>
+    <string name="searchButtonText">SEARCH</string>
+    <string name="onEmptyRequest">Empty request!</string>
+    <string name="onNotEmptyRequest">Your request: %1$s</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="reload">Reload</string>
+    <string name="movieTitleLabel">Название: </string>
+    <string name="movieGenreLabel">Жанр: </string>
+    <string name="movieReleaseYearLabel">Год: </string>
+    <string name="movieUserScoreLabel">Рейтинг: </string>
+    <!-- Main screen end -->
 </resources>

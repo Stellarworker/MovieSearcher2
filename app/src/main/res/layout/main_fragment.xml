@@ -1,20 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/mainFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainFragment">
+    android:orientation="vertical"
+    tools:context=".view.MainActivity">
 
-    <TextView
-        android:id="@+id/message"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mainPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mainPromptMarginTop"
+        android:text="@string/mainPromptText"
+        android:textAlignment="center" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/searchLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mainPromptMarginTop"
+        android:hint="@string/searchLineHint"
+        android:textAlignment="textStart" />
+
+    <FrameLayout
+        android:id="@+id/loadingLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MainFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center"
+        android:background="@color/loadingBackground"
+        android:visibility="gone"
+        tools:visibility="invisible">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/searchLineMarginTop"
+        android:text="@string/searchButtonText" />
+
+    <TableLayout
+        android:id="@+id/movieTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/movieTableMarginStart"
+        android:background="@color/black"
+        android:visibility="gone">
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieTitleLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/movieTableMargin"
+                android:layout_marginTop="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding"
+                android:text="@string/movieTitleLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieTitleData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/movieTableMargin"
+                android:layout_marginEnd="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding" />
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieGenreLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding"
+                android:text="@string/movieGenreLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieGenreData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding" />
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieReleaseYearLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding"
+                android:text="@string/movieReleaseYearLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieReleaseYearData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieUserScoreLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/movieTableMargin"
+                android:layout_marginBottom="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding"
+                android:text="@string/movieUserScoreLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieUserScoreData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/movieTableMargin"
+                android:layout_marginBottom="@dimen/movieTableMargin"
+                android:background="@color/white"
+                android:paddingHorizontal="@dimen/movieTablePadding" />
+
+        </TableRow>
+    </TableLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
