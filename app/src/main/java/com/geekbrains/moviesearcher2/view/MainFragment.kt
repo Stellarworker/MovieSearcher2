@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainFragmentBinding
 import com.geekbrains.moviesearcher2.model.Movie
+import com.geekbrains.moviesearcher2.view.details.DetailsFragment
 import com.geekbrains.moviesearcher2.viewmodel.AppState
 import com.geekbrains.moviesearcher2.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -18,12 +19,27 @@ class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: MainViewModel
+    private var query: String = ""
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
+        override fun onItemViewClick(movie: Movie) {
+            val manager = activity?.supportFragmentManager
+            if (manager != null) {
+                val bundle = Bundle()
+                bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
+                manager.beginTransaction()
+                    .replace(R.id.container, DetailsFragment.newInstance(bundle))
+                    .addToBackStack("MainFragment")
+                    .commitAllowingStateLoss()
+            }
+        }
+
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,15 +49,17 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.mainFragmentRecyclerView.adapter = adapter
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         val observer = Observer<AppState> {
             renderData(it)
         }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
         binding.searchButton.setOnClickListener {
-            startSearching(binding.searchLine.text.toString().trim())
+            query = binding.searchLine.text.toString().trim()
+            startSearching(query)
             binding.searchLine.setText("")  // Очистка поисковой строки.
         }
     }
@@ -49,11 +67,10 @@ class MainFragment : Fragment() {
     // Метод обрабатывает поисковый запрос пользователя.
     private fun startSearching(searchText: String) {
         if (searchText != "") {
-            binding.movieTable.visibility = View.GONE
-            viewModel.getMovieFromLocalSource()
+            viewModel.getMovies(searchText)
         } else {
             Snackbar.make(
-                binding.mainFragment, getString(R.string.onEmptyRequest),
+                binding.mainFragment, getString(R.string.emptyRequestErrorLabelText),
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -62,10 +79,8 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
-                val movieData = appState.movieData
+                adapter.setMovie(appState.movieData)
                 binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.mainFragment, R.string.success, Snackbar.LENGTH_LONG).show()
-                setData(movieData)
             }
             is AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
@@ -78,24 +93,16 @@ class MainFragment : Fragment() {
                     Snackbar
                         .make(
                             binding.mainFragment,
-                            getString(R.string.error),
+                            getString(R.string.errorLabelText),
                             Snackbar.LENGTH_INDEFINITE
                         )
-                        .setAction(getString(R.string.reload)) {
-                            viewModel.getMovieFromLocalSource()
+                        .setAction(getString(R.string.reloadLabelText)) {
+                            viewModel.getMovies(query)
                         }
                         .show()
                 }
             }
         }
-    }
-
-    private fun setData(movieData: Movie) {
-        binding.movieTitleData.text = movieData.title
-        binding.movieGenreData.text = movieData.genre
-        binding.movieReleaseYearData.text = movieData.releaseYear.toString()
-        binding.movieUserScoreData.text = movieData.userScore.toString()
-        binding.movieTable.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

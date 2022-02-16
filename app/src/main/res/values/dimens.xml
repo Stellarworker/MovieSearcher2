@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Main screen begin -->
+    <!-- MainFragment begin -->
     <dimen name="mainPromptMarginTop">5dp</dimen>
     <dimen name="searchLineMarginTop">5dp</dimen>
     <dimen name="searchButtonMarginTop">5dp</dimen>
+    <dimen name="recyclerViewMarginTop">5dp</dimen>
     <dimen name="movieTablePadding">5dp</dimen>
     <dimen name="movieTableMarginStart">10dp</dimen>
     <dimen name="movieTableMargin">1dp</dimen>
-    <!-- Main screen end-->
+    <!-- RecycleView begin-->
+    <dimen name="itemContainerMarginStart">5dp</dimen>
+    <dimen name="itemContainerMarginEnd">5dp</dimen>
+    <dimen name="itemContainerMarginTop">5dp</dimen>
+    <dimen name="itemContainerCardCornerRadius">5dp</dimen>
+    <dimen name="itemContainerCardElevation">3dp</dimen>
+    <dimen name="itemPadding">5dp</dimen>
+    <dimen name="itemMovieTitleTextSize">25sp</dimen>
+    <dimen name="itemMovieYearTextSize">15sp</dimen>
+    <!-- RecycleView end-->
+    <!-- MainFragment end-->
+    <!-- DetailsFragment begin -->
+    <dimen name="mainHeaderTextSize">30sp</dimen>
+    <dimen name="mainHeaderMarginTop">10dp</dimen>
+    <dimen name="movieInfoTableMarginTop">20dp</dimen>
+    <dimen name="movieInfoTableTextSize">20sp</dimen>
+    <dimen name="movieInfoTablePaddingHorizontal">20dp</dimen>
+    <!-- DetailsFragment end -->
 </resources>

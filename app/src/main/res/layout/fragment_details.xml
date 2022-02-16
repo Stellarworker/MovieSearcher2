@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/movieInfoContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mainHeaderMarginTop"
+        android:text="@string/mainHeaderText"
+        android:textColor="@color/black"
+        android:textSize="@dimen/mainHeaderTextSize" />
+
+    <TableLayout
+        android:id="@+id/movieInfoTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/movieInfoTableMarginTop">
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/movieTitleLabelText"
+                android:textColor="@color/black"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieTitleDataText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/movieGenreLabelText"
+                android:textColor="@color/black"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieGenreDataText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/movieReleaseYearLabelText"
+                android:textColor="@color/black"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieReleaseYearDataText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/movieUserScoreLabelText"
+                android:textColor="@color/black"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieUserScoreDataText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                android:textSize="@dimen/movieInfoTableTextSize" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
