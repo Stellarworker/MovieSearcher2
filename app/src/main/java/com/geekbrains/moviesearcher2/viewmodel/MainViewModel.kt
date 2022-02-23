@@ -11,22 +11,17 @@ class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
     private val repositoryImpl: Repository = RepositoryImpl()
 ) : ViewModel() {
-    private val errorLoadingDataMessage = "Error loading data!"
     fun getLiveData() = liveDataToObserve
     fun getMovies(query: String) = getMoviesFromServer(query)
     private fun getMoviesFromServer(query: String) {
         liveDataToObserve.value = AppState.Loading
         Thread {
             sleep(2000)
-            if (Math.random() > 0.4) {
-                liveDataToObserve.postValue(
+            liveDataToObserve.postValue(
+                if (Math.random() > 0.4)
                     AppState.Success(repositoryImpl.getMoviesFromServer(query))
-                )
-            } else {
-                liveDataToObserve.postValue(
-                    AppState.Error(Throwable(errorLoadingDataMessage))
-                )
-            }
+                else AppState.Error(Throwable())
+            )
         }.start()
     }
 }

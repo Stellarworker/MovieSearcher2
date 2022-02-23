@@ -12,8 +12,8 @@
     <dimen name="itemContainerMarginStart">5dp</dimen>
     <dimen name="itemContainerMarginEnd">5dp</dimen>
     <dimen name="itemContainerMarginTop">5dp</dimen>
-    <dimen name="itemContainerCardCornerRadius">5dp</dimen>
-    <dimen name="itemContainerCardElevation">3dp</dimen>
+    <dimen name="itemContainerCardCornerRadius">3dp</dimen>
+    <dimen name="itemContainerCardElevation">5dp</dimen>
     <dimen name="itemPadding">5dp</dimen>
     <dimen name="itemMovieTitleTextSize">25sp</dimen>
     <dimen name="itemMovieYearTextSize">15sp</dimen>
@@ -22,6 +22,7 @@
     <!-- DetailsFragment begin -->
     <dimen name="mainHeaderTextSize">30sp</dimen>
     <dimen name="mainHeaderMarginTop">10dp</dimen>
+    <dimen name="movieInfoTableMarginHorizontal">10dp</dimen>
     <dimen name="movieInfoTableMarginTop">20dp</dimen>
     <dimen name="movieInfoTableTextSize">20sp</dimen>
     <dimen name="movieInfoTablePaddingHorizontal">20dp</dimen>

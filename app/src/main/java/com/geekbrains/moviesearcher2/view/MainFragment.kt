@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.lifecycle.Observer
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainFragmentBinding
@@ -19,7 +20,9 @@ class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
     private var query: String = ""
 
     companion object {
@@ -28,17 +31,15 @@ class MainFragment : Fragment() {
 
     private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
         override fun onItemViewClick(movie: Movie) {
-            val manager = activity?.supportFragmentManager
-            if (manager != null) {
-                val bundle = Bundle()
-                bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
-                manager.beginTransaction()
-                    .replace(R.id.container, DetailsFragment.newInstance(bundle))
+            activity?.supportFragmentManager?.apply {
+                beginTransaction()
+                    .replace(R.id.container, DetailsFragment.newInstance(Bundle().apply {
+                        putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
+                    }))
                     .addToBackStack("MainFragment")
                     .commitAllowingStateLoss()
             }
         }
-
     })
 
     override fun onCreateView(
@@ -51,58 +52,72 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mainFragmentRecyclerView.adapter = adapter
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        val observer = Observer<AppState> {
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-        viewModel.getLiveData().observe(viewLifecycleOwner, observer)
-        binding.searchButton.setOnClickListener {
-            query = binding.searchLine.text.toString().trim()
-            startSearching(query)
-            binding.searchLine.setText("")  // Очистка поисковой строки.
+        binding.apply {
+            mainFragmentRecyclerView.adapter = adapter
+            searchButton.setOnClickListener {
+                searchLine.run {
+                    query = text.toString().trim()
+                    startSearching(query)
+                    text?.clear()
+                }
+            }
         }
     }
 
     // Метод обрабатывает поисковый запрос пользователя.
     private fun startSearching(searchText: String) {
-        if (searchText != "") {
-            viewModel.getMovies(searchText)
-        } else {
-            Snackbar.make(
-                binding.mainFragment, getString(R.string.emptyRequestErrorLabelText),
-                Snackbar.LENGTH_LONG
-            ).show()
+        when (searchText) {
+            "" -> binding.root.makeSnackbar(text = getString(R.string.emptyRequestLabelText))
+            else -> viewModel.getMovies(searchText)
         }
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
-                adapter.setMovie(appState.movieData)
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingLayout.hide()
+                when (appState.movieData.size) {
+                    0 -> binding.root.makeSnackbar(
+                        text = getString(R.string.nothingFoundLabelText)
+                    )
+                    else -> adapter.setMovie(appState.movieData)
+                }
             }
-            is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
+            is AppState.Loading -> binding.loadingLayout.show()
             is AppState.Error -> {
                 try {
                     throw Exception(appState.error)
                 } catch (e: Throwable) {
-                    binding.loadingLayout.visibility = View.GONE
-                    Snackbar
-                        .make(
-                            binding.mainFragment,
-                            getString(R.string.errorLabelText),
-                            Snackbar.LENGTH_INDEFINITE
-                        )
-                        .setAction(getString(R.string.reloadLabelText)) {
+                    binding.loadingLayout.hide()
+                    binding.root.makeSnackbar(
+                        text = getString(R.string.errorLabelText),
+                        actionText = getString(R.string.reloadLabelText),
+                        action = {
                             viewModel.getMovies(query)
-                        }
-                        .show()
+                        })
                 }
             }
         }
+    }
+
+    private fun View.makeSnackbar(
+        text: String = "",
+        actionText: String = "",
+        action: (View) -> Unit = {},
+        length: Int = Snackbar.LENGTH_LONG
+    ) = also {
+        Snackbar.make(this, text, length).setAction(actionText, action).show()
+    }
+
+    private fun View.show() = apply {
+        visibility = View.VISIBLE
+    }
+
+    private fun View.hide() = apply {
+        visibility = View.GONE
     }
 
     override fun onDestroyView() {

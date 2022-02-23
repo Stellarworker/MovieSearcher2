@@ -23,17 +23,18 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     }
 
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         fun bind(movie: Movie) {
-            itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemTitle).text =
-                movie.title
-            itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemYear).text =
-                String.format(
-                    itemView.resources.getString(R.string.movieYearText),
-                    movie.releaseYear.toString()
-                )
-            itemView.setOnClickListener {
-                onItemViewClickListener?.onItemViewClick(movie)
+            with (itemView) {
+                findViewById<TextView>(R.id.mainFragmentRecyclerItemTitle).text =
+                    movie.title
+                findViewById<TextView>(R.id.mainFragmentRecyclerItemYear).text =
+                    String.format(
+                        resources.getString(R.string.movieYearText),
+                        movie.releaseYear.toString()
+                    )
+                setOnClickListener {
+                    onItemViewClickListener?.onItemViewClick(movie)
+                }
             }
         }
     }
@@ -42,21 +43,18 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
         fun onItemViewClick(movie: Movie)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        return MainViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+         MainViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.fragment_main_recycler_item,
                 parent, false
             ) as View
-        )
-    }
+         )
+
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.bind(movieData[position])
     }
 
-    override fun getItemCount(): Int {
-        return movieData.size
-    }
-
+    override fun getItemCount() = movieData.size
 }
