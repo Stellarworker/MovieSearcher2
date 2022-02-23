@@ -5,13 +5,14 @@
     <string name="searchLineHintText">Type Here</string>
     <string name="searchButtonText">SEARCH</string>
     <string name="movieYearText">(%1$s)</string>
-    <string name="emptyRequestErrorLabelText">Error! Empty request!</string>
+    <string name="emptyRequestLabelText">Empty request!</string>
+    <string name="nothingFoundLabelText">"Nothing has been found!"</string>
     <string name="errorLabelText">Error</string>
     <string name="reloadLabelText">Reload</string>
     <!-- MainFragment end -->
     <!-- DetailsFragment begin -->
     <string name="mainHeaderText">Movie Details</string>
-    <string name="movieTitleLabelText">Title: </string>
+    <string name="movieDirectorLabelText">Director: </string>
     <string name="movieGenreLabelText">Genre: </string>
     <string name="movieReleaseYearLabelText">Year: </string>
     <string name="movieUserScoreLabelText">Score: </string>

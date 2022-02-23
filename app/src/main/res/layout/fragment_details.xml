@@ -7,10 +7,11 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movieTitleDataText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/mainHeaderMarginTop"
-        android:text="@string/mainHeaderText"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/mainHeaderTextSize" />
 
@@ -18,6 +19,7 @@
         android:id="@+id/movieInfoTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/movieInfoTablePaddingHorizontal"
         android:layout_marginTop="@dimen/movieInfoTableMarginTop">
 
         <TableRow>
@@ -25,12 +27,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/movieTitleLabelText"
+                android:text="@string/movieDirectorLabelText"
                 android:textColor="@color/black"
                 android:textSize="@dimen/movieInfoTableTextSize" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieTitleDataText"
+                android:id="@+id/movieDirectorDataText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
