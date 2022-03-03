@@ -24,7 +24,7 @@
     <dimen name="mainHeaderMarginTop">10dp</dimen>
     <dimen name="movieInfoTableMarginHorizontal">10dp</dimen>
     <dimen name="movieInfoTableMarginTop">20dp</dimen>
-    <dimen name="movieInfoTableTextSize">20sp</dimen>
+    <dimen name="movieInfoTableTextSize">15sp</dimen>
     <dimen name="movieInfoTablePaddingHorizontal">20dp</dimen>
     <!-- DetailsFragment end -->
 </resources>

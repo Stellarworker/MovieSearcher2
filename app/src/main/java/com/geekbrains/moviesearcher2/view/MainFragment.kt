@@ -1,27 +1,34 @@
 package com.geekbrains.moviesearcher2.view
 
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.lifecycle.Observer
+import androidx.annotation.RequiresApi
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainFragmentBinding
-import com.geekbrains.moviesearcher2.model.Movie
+import com.geekbrains.moviesearcher2.model.MovieDTO
+import com.geekbrains.moviesearcher2.model.MovieDetails
 import com.geekbrains.moviesearcher2.view.details.DetailsFragment
+import com.geekbrains.moviesearcher2.view.details.DetailsLoader
 import com.geekbrains.moviesearcher2.viewmodel.AppState
+import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
 import com.geekbrains.moviesearcher2.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
+@RequiresApi(Build.VERSION_CODES.N)
 class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProvider(requireActivity())[MainViewModel::class.java]
+    }
+    private val detailsViewModel: DetailsViewModel by lazy {
+        ViewModelProvider(requireActivity())[DetailsViewModel::class.java]
     }
     private var query: String = ""
 
@@ -30,15 +37,30 @@ class MainFragment : Fragment() {
     }
 
     private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
-        override fun onItemViewClick(movie: Movie) {
-            activity?.supportFragmentManager?.apply {
-                beginTransaction()
-                    .replace(R.id.container, DetailsFragment.newInstance(Bundle().apply {
-                        putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
-                    }))
-                    .addToBackStack("MainFragment")
-                    .commitAllowingStateLoss()
-            }
+        override fun onItemViewClick(movieDTO: MovieDTO) {
+            val onLoadListener: DetailsLoader.DetailsLoaderListener =
+                object : DetailsLoader.DetailsLoaderListener {
+                    override fun onLoaded(details: MovieDetails) {
+                        binding.loadingLayout.hide()
+                        detailsViewModel.postMovie(details)
+                        activity?.supportFragmentManager?.apply {
+                            beginTransaction()
+                                .replace(R.id.container, DetailsFragment.newInstance(Bundle()))
+                                .addToBackStack("MainFragment")
+                                .commitAllowingStateLoss()
+                        }
+                    }
+
+                    override fun onFailed(throwable: Throwable) {
+                        with(binding) {
+                            loadingLayout.hide()
+                            root.makeSnackbar(text = getString(R.string.errorLabelText))
+                        }
+                    }
+                }
+            val loader = movieDTO.id?.let { DetailsLoader(onLoadListener, it) }
+            loader?.run { loadDetails() }
+            binding.loadingLayout.show()
         }
     })
 
@@ -50,9 +72,10 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getLiveData().observe(viewLifecycleOwner) {
+        mainViewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
         binding.apply {
@@ -68,18 +91,20 @@ class MainFragment : Fragment() {
     }
 
     // Метод обрабатывает поисковый запрос пользователя.
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun startSearching(searchText: String) {
         when (searchText) {
             "" -> binding.root.makeSnackbar(text = getString(R.string.emptyRequestLabelText))
-            else -> viewModel.getMovies(searchText)
+            else -> mainViewModel.getMovies(searchText)
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
                 binding.loadingLayout.hide()
-                when (appState.movieData.size) {
+                when (appState.movieData.results?.size) {
                     0 -> binding.root.makeSnackbar(
                         text = getString(R.string.nothingFoundLabelText)
                     )
@@ -96,7 +121,7 @@ class MainFragment : Fragment() {
                         text = getString(R.string.errorLabelText),
                         actionText = getString(R.string.reloadLabelText),
                         action = {
-                            viewModel.getMovies(query)
+                            mainViewModel.getMovies(query)
                         })
                 }
             }

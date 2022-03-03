@@ -21,10 +21,11 @@
             android:id="@+id/mainFragmentRecyclerItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textSize="@dimen/itemMovieTitleTextSize" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mainFragmentRecyclerItemYear"
+            android:id="@+id/mainFragmentRecyclerItemReleaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/itemMovieYearTextSize" />
