@@ -27,12 +27,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/movieDirectorLabelText"
+                android:text="@string/movieTaglineLabelText"
                 android:textColor="@color/black"
                 android:textSize="@dimen/movieInfoTableTextSize" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieDirectorDataText"
+                android:id="@+id/movieTaglineDataText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
@@ -63,12 +63,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/movieReleaseYearLabelText"
+                android:text="@string/movieReleaseDateLabelText"
                 android:textColor="@color/black"
                 android:textSize="@dimen/movieInfoTableTextSize" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieReleaseYearDataText"
+                android:id="@+id/movieReleaseDateDataText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
@@ -80,12 +80,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/movieUserScoreLabelText"
+                android:text="@string/movieVoteAverageLabelText"
                 android:textColor="@color/black"
                 android:textSize="@dimen/movieInfoTableTextSize" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieUserScoreDataText"
+                android:id="@+id/movieVoteAverageDataText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"

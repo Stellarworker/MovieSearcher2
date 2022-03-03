@@ -6,55 +6,52 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearcher2.R
-import com.geekbrains.moviesearcher2.model.Movie
+import com.geekbrains.moviesearcher2.model.MovieDTO
+import com.geekbrains.moviesearcher2.model.MoviesDTO
 
 class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
 
-    private var movieData: List<Movie> = listOf()
+    private var movieData: MoviesDTO = MoviesDTO(0, listOf())
 
-    fun setMovie(data: List<Movie>) {
+    fun setMovie(data: MoviesDTO) {
         movieData = data
         notifyDataSetChanged()
     }
 
-    fun removeListener() {
-        onItemViewClickListener = null
-    }
-
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(movie: Movie) {
-            with (itemView) {
+        fun bind(movieDTO: MovieDTO) {
+            with(itemView) {
                 findViewById<TextView>(R.id.mainFragmentRecyclerItemTitle).text =
-                    movie.title
-                findViewById<TextView>(R.id.mainFragmentRecyclerItemYear).text =
+                    movieDTO.title
+                findViewById<TextView>(R.id.mainFragmentRecyclerItemReleaseDate).text =
                     String.format(
-                        resources.getString(R.string.movieYearText),
-                        movie.releaseYear.toString()
+                        resources.getString(R.string.movieReleaseDateText),
+                        movieDTO.release_date.toString().dropLast(6)
                     )
                 setOnClickListener {
-                    onItemViewClickListener?.onItemViewClick(movie)
+                    onItemViewClickListener?.onItemViewClick(movieDTO)
                 }
             }
         }
     }
 
     interface OnItemViewClickListener {
-        fun onItemViewClick(movie: Movie)
+        fun onItemViewClick(movieDTO: MovieDTO)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-         MainViewHolder(
+        MainViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.fragment_main_recycler_item,
                 parent, false
             ) as View
-         )
+        )
 
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(movieData[position])
+        movieData.results?.let { holder.bind(it[position]) }
     }
 
-    override fun getItemCount() = movieData.size
+    override fun getItemCount() = movieData.results?.size ?: 0
 }
