@@ -11,13 +11,13 @@ import androidx.annotation.RequiresApi
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainFragmentBinding
 import com.geekbrains.moviesearcher2.model.MovieDTO
-import com.geekbrains.moviesearcher2.model.MovieDetails
 import com.geekbrains.moviesearcher2.view.details.DetailsFragment
-import com.geekbrains.moviesearcher2.view.details.DetailsLoader
 import com.geekbrains.moviesearcher2.viewmodel.AppState
 import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
 import com.geekbrains.moviesearcher2.viewmodel.MainViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.geekbrains.moviesearcher2.makeSnackbar
+import com.geekbrains.moviesearcher2.show
+import com.geekbrains.moviesearcher2.hide
 
 @RequiresApi(Build.VERSION_CODES.N)
 class MainFragment : Fragment() {
@@ -38,29 +38,15 @@ class MainFragment : Fragment() {
 
     private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
         override fun onItemViewClick(movieDTO: MovieDTO) {
-            val onLoadListener: DetailsLoader.DetailsLoaderListener =
-                object : DetailsLoader.DetailsLoaderListener {
-                    override fun onLoaded(details: MovieDetails) {
-                        binding.loadingLayout.hide()
-                        detailsViewModel.postMovie(details)
-                        activity?.supportFragmentManager?.apply {
-                            beginTransaction()
-                                .replace(R.id.container, DetailsFragment.newInstance(Bundle()))
-                                .addToBackStack("MainFragment")
-                                .commitAllowingStateLoss()
-                        }
-                    }
-
-                    override fun onFailed(throwable: Throwable) {
-                        with(binding) {
-                            loadingLayout.hide()
-                            root.makeSnackbar(text = getString(R.string.errorLabelText))
-                        }
-                    }
-                }
-            val loader = movieDTO.id?.let { DetailsLoader(onLoadListener, it) }
-            loader?.run { loadDetails() }
-            binding.loadingLayout.show()
+            movieDTO.id?.let {
+                detailsViewModel.postMovie(it)
+            }
+            activity?.supportFragmentManager?.apply {
+                beginTransaction()
+                    .replace(R.id.container, DetailsFragment.newInstance(Bundle()))
+                    .addToBackStack("MainFragment")
+                    .commitAllowingStateLoss()
+            }
         }
     })
 
@@ -90,7 +76,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    // Метод обрабатывает поисковый запрос пользователя.
     @RequiresApi(Build.VERSION_CODES.N)
     private fun startSearching(searchText: String) {
         when (searchText) {
@@ -126,23 +111,6 @@ class MainFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun View.makeSnackbar(
-        text: String = "",
-        actionText: String = "",
-        action: (View) -> Unit = {},
-        length: Int = Snackbar.LENGTH_LONG
-    ) = also {
-        Snackbar.make(this, text, length).setAction(actionText, action).show()
-    }
-
-    private fun View.show() = apply {
-        visibility = View.VISIBLE
-    }
-
-    private fun View.hide() = apply {
-        visibility = View.GONE
     }
 
     override fun onDestroyView() {

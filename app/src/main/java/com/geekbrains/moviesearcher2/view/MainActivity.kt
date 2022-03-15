@@ -1,5 +1,8 @@
 package com.geekbrains.moviesearcher2.view
 
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +13,7 @@ import com.geekbrains.moviesearcher2.databinding.MainActivityBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
+    private val receiver = MainBroadcastReceiver()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,5 +27,11 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
+        registerReceiver(receiver, IntentFilter(Intent.ACTION_POWER_CONNECTED))
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(receiver)
+        super.onDestroy()
     }
 }
