@@ -1,43 +1,35 @@
 package com.geekbrains.moviesearcher2.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
 data class Genres(
     val id: Int?,
     val name: String?
-) : Parcelable
+)
 
-@Parcelize
 data class BelongsToCollection(
     val id: Int?,
     val name: String?,
     val poster_path: String?,
     val backdrop_path: String?
-) : Parcelable
+)
 
-@Parcelize
 data class ProductionCompanies(
     val name: String?,
     val id: Int?,
     val logo_path: String?,
     val origin_country: String?
-) : Parcelable
+)
 
-@Parcelize
 data class ProductionCountries(
     val iso_3166_1: String?,
     val name: String?
-) : Parcelable
+)
 
-@Parcelize
 data class SpokenLanguages(
     val iso_639_1: String?,
     val name: String?
-) : Parcelable
+)
 
-@Parcelize
+
 data class MovieDetails(
     val adult: Boolean?,
     val backdrop_path: String?,
@@ -64,4 +56,4 @@ data class MovieDetails(
     val video: Boolean?,
     val vote_average: Double?,
     val vote_count: Int?
-) : Parcelable
+)

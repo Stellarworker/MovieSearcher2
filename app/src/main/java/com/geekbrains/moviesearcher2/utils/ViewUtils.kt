@@ -1,4 +1,4 @@
-package com.geekbrains.moviesearcher2
+package com.geekbrains.moviesearcher2.utils
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
@@ -8,14 +8,14 @@ fun View.makeSnackbar(
     actionText: String = "",
     action: (View) -> Unit = {},
     length: Int = Snackbar.LENGTH_LONG
-) = also {
+) {
     Snackbar.make(this, text, length).setAction(actionText, action).show()
 }
 
-fun View.show() = apply {
+fun View.show() {
     visibility = View.VISIBLE
 }
 
-fun View.hide() = apply {
+fun View.hide() {
     visibility = View.GONE
 }
