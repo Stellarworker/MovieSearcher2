@@ -1,9 +1,5 @@
 package com.geekbrains.moviesearcher2.view.details
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,75 +8,38 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import coil.load
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.FragmentDetailsBinding
 import com.geekbrains.moviesearcher2.model.MovieDetails
+import com.geekbrains.moviesearcher2.utils.hide
+import com.geekbrains.moviesearcher2.utils.makeIPAddress
+import com.geekbrains.moviesearcher2.utils.makeSnackbar
+import com.geekbrains.moviesearcher2.utils.show
+import com.geekbrains.moviesearcher2.viewmodel.AppStateDetails
 import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
-import kotlinx.android.synthetic.main.fragment_details.view.*
-import com.geekbrains.moviesearcher2.makeSnackbar
-import com.geekbrains.moviesearcher2.show
-import com.geekbrains.moviesearcher2.hide
-import com.google.android.material.snackbar.Snackbar
 
-const val DETAILS_INTENT_FILTER = "DETAILS INTENT FILTER"
-const val DETAILS_EXTRA = "DETAILS"
-const val DETAILS_LOAD_RESULT_EXTRA = "LOAD RESULT"
-const val DETAILS_INTENT_EMPTY_EXTRA = "INTENT IS EMPTY"
-const val DETAILS_DATA_EMPTY_EXTRA = "DATA IS EMPTY"
-const val DETAILS_RESPONSE_EMPTY_EXTRA = "RESPONSE IS EMPTY"
-const val DETAILS_REQUEST_ERROR_EXTRA = "REQUEST ERROR"
-const val DETAILS_REQUEST_ERROR_MESSAGE_EXTRA = "REQUEST ERROR MESSAGE"
-const val DETAILS_URL_MALFORMED_EXTRA = "URL MALFORMED"
-const val DETAILS_RESPONSE_SUCCESS_EXTRA = "RESPONSE SUCCESS"
-const val ID_EXTRA = "ID"
-private const val PROCESS_ERROR = "Error processing"
+/**
+ * poster_sizes
+ * 0   "w92"
+ * 1   "w154"
+ * 2   "w185"
+ * 3   "w342"
+ * 4   "w500"
+ * 5   "w780"
+ * 6   "original"
+ */
+private const val POSTER_SIZE = "w342"
+private const val HIDE_ALL = 0
+private const val SHOW_LOADING = 1
+private const val SHOW_DATA = 2
+
 
 class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
     private val detailsViewModel: DetailsViewModel by lazy {
         ViewModelProvider(requireActivity())[DetailsViewModel::class.java]
-    }
-
-    private val loadResultsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        @RequiresApi(Build.VERSION_CODES.N)
-        override fun onReceive(context: Context, intent: Intent) {
-            when (val result = intent.getStringExtra(DETAILS_LOAD_RESULT_EXTRA)) {
-                DETAILS_RESPONSE_SUCCESS_EXTRA -> intent.getParcelableExtra<MovieDetails>(
-                    DETAILS_EXTRA
-                )?.let {
-                    renderData(it)
-                }
-                else -> {
-                    binding.root.makeSnackbar(
-                        text = "Error: ${result.toString()}",
-                        actionText = getString(R.string.reloadLabelText),
-                        length = Snackbar.LENGTH_INDEFINITE,
-                        action = {
-                            detailsViewModel.getLiveData().value?.let {
-                                getDetails(it)
-                            }
-                        }
-                    )
-                }
-            }
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        context?.let {
-            LocalBroadcastManager.getInstance(it)
-                .registerReceiver(loadResultsReceiver, IntentFilter(DETAILS_INTENT_FILTER))
-        }
-    }
-
-    override fun onDestroy() {
-        context?.let {
-            LocalBroadcastManager.getInstance(it).unregisterReceiver(loadResultsReceiver)
-        }
-        super.onDestroy()
     }
 
     override fun onCreateView(
@@ -95,21 +54,30 @@ class DetailsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        detailsViewModel.getLiveData().observe(viewLifecycleOwner) {
-            getDetails(it)
+        detailsViewModel.movieDetailsLiveData.observe(viewLifecycleOwner) {
+            renderData(it)
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun getDetails(id: Int) {
-        context?.let {
-            it.startService(Intent(it, DetailsService::class.java).apply {
-                putExtra(ID_EXTRA, id)
-            })
+    private fun renderData(appStateDetails: AppStateDetails) {
+        when (appStateDetails) {
+            is AppStateDetails.Success -> {
+                setDetails(appStateDetails.movieDetails)
+                showData()
+            }
+            is AppStateDetails.Loading -> showLoading()
+            is AppStateDetails.Error -> {
+                binding.root.makeSnackbar(
+                    text = appStateDetails.error.message ?: getString(R.string.errorLabelText),
+                    actionText = getString(R.string.reloadLabelText),
+                    action = {
+                        detailsViewModel.getMovieDetails(detailsViewModel.getMovieID())
+                    })
+            }
         }
     }
 
-    private fun renderData(details: MovieDetails) {
+    private fun setDetails(details: MovieDetails) {
         with(binding) {
             movieTitleDataText.text = details.title
             movieTaglineDataText.text = details.tagline
@@ -118,38 +86,45 @@ class DetailsFragment : Fragment() {
             movieReleaseDateDataText.text = details.release_date
             movieVoteAverageDataText.text = details.vote_average.toString()
         }
+
+        details.poster_path?.let {
+            binding.movieDetailsPoster.load(
+                makeIPAddress(
+                    resources.getString(R.string.baseMovieAddressString),
+                    POSTER_SIZE,
+                    it
+                )
+            )
+        }
         showData()
     }
 
     private fun hideAll() {
-        setVisibleMode(0)
+        setVisibleMode(HIDE_ALL)
     }
 
     private fun showLoading() {
-        setVisibleMode(1)
+        setVisibleMode(SHOW_LOADING)
     }
 
     private fun showData() {
-        setVisibleMode(2)
+        setVisibleMode(SHOW_DATA)
     }
 
     private fun setVisibleMode(mode: Int) {
-        with(binding.root) {
+        with(binding) {
             when (mode) {
-                0 -> {
+                HIDE_ALL -> {
                     loadingLayoutDetails.hide()
-                    movieTitleDataText.hide()
-                    movieInfoTable.hide()
+                    movieDetailsScrollContainer.hide()
                 }
-                1 -> {
+                SHOW_LOADING -> {
                     loadingLayoutDetails.show()
-                    movieTitleDataText.hide()
-                    movieInfoTable.hide()
+                    movieDetailsScrollContainer.hide()
                 }
                 else -> {
                     loadingLayoutDetails.hide()
-                    movieTitleDataText.show()
-                    movieInfoTable.show()
+                    movieDetailsScrollContainer.show()
                 }
             }
         }

@@ -15,7 +15,7 @@
     <dimen name="itemContainerCardCornerRadius">3dp</dimen>
     <dimen name="itemContainerCardElevation">5dp</dimen>
     <dimen name="itemPadding">5dp</dimen>
-    <dimen name="itemMovieTitleTextSize">25sp</dimen>
+    <dimen name="itemMovieTitleTextSize">15sp</dimen>
     <dimen name="itemMovieYearTextSize">15sp</dimen>
     <!-- RecycleView end-->
     <!-- MainFragment end-->
@@ -24,6 +24,7 @@
     <dimen name="mainHeaderMarginTop">10dp</dimen>
     <dimen name="movieInfoTableMarginHorizontal">10dp</dimen>
     <dimen name="movieInfoTableMarginTop">20dp</dimen>
+    <dimen name="movieInfoTableMarginBottom">50dp</dimen>
     <dimen name="movieInfoTableTextSize">15sp</dimen>
     <dimen name="movieInfoTablePaddingHorizontal">20dp</dimen>
     <!-- DetailsFragment end -->

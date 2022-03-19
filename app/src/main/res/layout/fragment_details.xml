@@ -20,98 +20,115 @@
             android:layout_gravity="center" />
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/movieTitleDataText"
-        android:layout_width="wrap_content"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/movieDetailsScrollContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mainHeaderMarginTop"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/mainHeaderTextSize"
-        android:visibility="gone"
-        tools:visibility="invisible" />
-
-    <TableLayout
-        android:id="@+id/movieInfoTable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-        android:layout_marginTop="@dimen/movieInfoTableMarginTop"
         android:visibility="gone"
         tools:visibility="invisible">
 
-        <TableRow>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieTitleDataText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/movieTaglineLabelText"
+                android:layout_marginTop="@dimen/mainHeaderMarginTop"
+                android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="@dimen/movieInfoTableTextSize" />
+                android:textSize="@dimen/mainHeaderTextSize" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieTaglineDataText"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/movieDetailsPoster"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                android:textSize="@dimen/movieInfoTableTextSize" />
+                android:scaleType="center" />
 
-        </TableRow>
-
-        <TableRow>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+            <TableLayout
+                android:id="@+id/movieInfoTable"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/movieGenreLabelText"
-                android:textColor="@color/black"
-                android:textSize="@dimen/movieInfoTableTextSize" />
+                android:layout_marginHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                android:layout_marginTop="@dimen/movieInfoTableMarginTop"
+                android:layout_marginBottom="@dimen/movieInfoTableMarginBottom">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieGenreDataText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                android:textSize="@dimen/movieInfoTableTextSize" />
+                <TableRow>
 
-        </TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/movieTaglineLabelText"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
 
-        <TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/movieTaglineDataText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/movieReleaseDateLabelText"
-                android:textColor="@color/black"
-                android:textSize="@dimen/movieInfoTableTextSize" />
+                </TableRow>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieReleaseDateDataText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                android:textSize="@dimen/movieInfoTableTextSize" />
-        </TableRow>
+                <TableRow>
 
-        <TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/movieGenreLabelText"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/movieVoteAverageLabelText"
-                android:textColor="@color/black"
-                android:textSize="@dimen/movieInfoTableTextSize" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/movieGenreDataText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieVoteAverageDataText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                android:textSize="@dimen/movieInfoTableTextSize" />
+                </TableRow>
 
-        </TableRow>
+                <TableRow>
 
-    </TableLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/movieReleaseDateLabelText"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/movieReleaseDateDataText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
+                </TableRow>
+
+                <TableRow>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/movieVoteAverageLabelText"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/movieVoteAverageDataText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
+                        android:textSize="@dimen/movieInfoTableTextSize" />
+
+                </TableRow>
+
+            </TableLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -2,7 +2,6 @@ package com.geekbrains.moviesearcher2.view
 
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

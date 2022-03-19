@@ -48,10 +48,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainFragmentRecyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/recyclerViewMarginTop"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

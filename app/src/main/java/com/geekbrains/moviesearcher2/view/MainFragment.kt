@@ -15,9 +15,9 @@ import com.geekbrains.moviesearcher2.view.details.DetailsFragment
 import com.geekbrains.moviesearcher2.viewmodel.AppState
 import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
 import com.geekbrains.moviesearcher2.viewmodel.MainViewModel
-import com.geekbrains.moviesearcher2.makeSnackbar
-import com.geekbrains.moviesearcher2.show
-import com.geekbrains.moviesearcher2.hide
+import com.geekbrains.moviesearcher2.utils.makeSnackbar
+import com.geekbrains.moviesearcher2.utils.show
+import com.geekbrains.moviesearcher2.utils.hide
 
 @RequiresApi(Build.VERSION_CODES.N)
 class MainFragment : Fragment() {
@@ -39,7 +39,7 @@ class MainFragment : Fragment() {
     private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
         override fun onItemViewClick(movieDTO: MovieDTO) {
             movieDTO.id?.let {
-                detailsViewModel.postMovie(it)
+                detailsViewModel.getMovieDetails(it)
             }
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
@@ -61,7 +61,7 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainViewModel.getLiveData().observe(viewLifecycleOwner) {
+        mainViewModel.moviesLiveData.observe(viewLifecycleOwner) {
             renderData(it)
         }
         binding.apply {
@@ -98,17 +98,13 @@ class MainFragment : Fragment() {
             }
             is AppState.Loading -> binding.loadingLayout.show()
             is AppState.Error -> {
-                try {
-                    throw Exception(appState.error)
-                } catch (e: Throwable) {
-                    binding.loadingLayout.hide()
-                    binding.root.makeSnackbar(
-                        text = getString(R.string.errorLabelText),
-                        actionText = getString(R.string.reloadLabelText),
-                        action = {
-                            mainViewModel.getMovies(query)
-                        })
-                }
+                binding.loadingLayout.hide()
+                binding.root.makeSnackbar(
+                    text = appState.error.message ?: getString(R.string.errorLabelText),
+                    actionText = getString(R.string.reloadLabelText),
+                    action = {
+                        mainViewModel.getMovies(query)
+                    })
             }
         }
     }
