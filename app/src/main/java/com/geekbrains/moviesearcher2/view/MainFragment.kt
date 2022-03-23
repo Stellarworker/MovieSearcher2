@@ -1,5 +1,6 @@
 package com.geekbrains.moviesearcher2.view
 
+import android.content.Context
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.annotation.RequiresApi
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainFragmentBinding
 import com.geekbrains.moviesearcher2.model.MovieDTO
+import com.geekbrains.moviesearcher2.utils.ALLOW_ADULT_CONTENT
 import com.geekbrains.moviesearcher2.view.details.DetailsFragment
 import com.geekbrains.moviesearcher2.viewmodel.AppState
 import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
@@ -31,6 +33,7 @@ class MainFragment : Fragment() {
         ViewModelProvider(requireActivity())[DetailsViewModel::class.java]
     }
     private var query: String = ""
+    private var includeAdult = false
 
     companion object {
         fun newInstance() = MainFragment()
@@ -61,6 +64,11 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.mFIncludedLoadingLayout.loadingLayout.hide()
+        activity?.let {
+            includeAdult =
+                it.getPreferences(Context.MODE_PRIVATE).getBoolean(ALLOW_ADULT_CONTENT, false)
+        }
         mainViewModel.moviesLiveData.observe(viewLifecycleOwner) {
             renderData(it)
         }
@@ -77,10 +85,10 @@ class MainFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun startSearching(searchText: String) {
-        when (searchText) {
+    private fun startSearching(query: String) {
+        when (query) {
             "" -> binding.root.makeSnackbar(text = getString(R.string.emptyRequestLabelText))
-            else -> mainViewModel.getMovies(searchText)
+            else -> mainViewModel.getMovies(includeAdult, query)
         }
     }
 
@@ -88,7 +96,7 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
-                binding.loadingLayout.hide()
+                binding.mFIncludedLoadingLayout.loadingLayout.hide()
                 when (appState.movieData.results?.size) {
                     0 -> binding.root.makeSnackbar(
                         text = getString(R.string.nothingFoundLabelText)
@@ -96,14 +104,14 @@ class MainFragment : Fragment() {
                     else -> adapter.setMovie(appState.movieData)
                 }
             }
-            is AppState.Loading -> binding.loadingLayout.show()
+            is AppState.Loading -> binding.mFIncludedLoadingLayout.loadingLayout.show()
             is AppState.Error -> {
-                binding.loadingLayout.hide()
+                binding.mFIncludedLoadingLayout.loadingLayout.hide()
                 binding.root.makeSnackbar(
                     text = appState.error.message ?: getString(R.string.errorLabelText),
                     actionText = getString(R.string.reloadLabelText),
                     action = {
-                        mainViewModel.getMovies(query)
+                        mainViewModel.getMovies(includeAdult, query)
                     })
             }
         }

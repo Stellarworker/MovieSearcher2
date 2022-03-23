@@ -8,7 +8,8 @@
     <dimen name="movieTablePadding">5dp</dimen>
     <dimen name="movieTableMarginStart">10dp</dimen>
     <dimen name="movieTableMargin">1dp</dimen>
-    <!-- RecycleView begin-->
+    <!-- MainFragment end-->
+    <!-- MainFragment RecyclerView begin-->
     <dimen name="itemContainerMarginStart">5dp</dimen>
     <dimen name="itemContainerMarginEnd">5dp</dimen>
     <dimen name="itemContainerMarginTop">5dp</dimen>
@@ -17,15 +18,31 @@
     <dimen name="itemPadding">5dp</dimen>
     <dimen name="itemMovieTitleTextSize">15sp</dimen>
     <dimen name="itemMovieYearTextSize">15sp</dimen>
-    <!-- RecycleView end-->
-    <!-- MainFragment end-->
+    <!-- MainFragment RecyclerView end-->
     <!-- DetailsFragment begin -->
     <dimen name="mainHeaderTextSize">30sp</dimen>
     <dimen name="mainHeaderMarginTop">10dp</dimen>
+    <dimen name="movieDetailsPosterMarginTop">10dp</dimen>
     <dimen name="movieInfoTableMarginHorizontal">10dp</dimen>
     <dimen name="movieInfoTableMarginTop">20dp</dimen>
-    <dimen name="movieInfoTableMarginBottom">50dp</dimen>
+    <dimen name="movieInfoTableMarginBottom">30dp</dimen>
     <dimen name="movieInfoTableTextSize">15sp</dimen>
     <dimen name="movieInfoTablePaddingHorizontal">20dp</dimen>
+    <dimen name="movieInfoScreenMarginHorizontal">20dp</dimen>
+    <dimen name="movieInfoScreenMarginBottom">50dp</dimen>
     <!-- DetailsFragment end -->
+    <!-- HistoryFragment begin -->
+    <dimen name="historyHeaderTextSize">30sp</dimen>
+    <dimen name="adultContentSwitchMarginTop">20dp</dimen>
+    <dimen name="adultContentSwitchSwitchPadding">20dp</dimen>
+    <!-- HistoryFragment end -->
+    <!-- HistoryFragment RecyclerView begin -->
+    <dimen name="hFItemTextSize">15sp</dimen>
+    <!-- HistoryFragment RecyclerView end -->
+    <!-- SettingsFragment begin -->
+    <dimen name="settingsHeaderTextSize">30sp</dimen>
+    <dimen name="settingsHeaderMarginTop">10dp</dimen>
+    <dimen name="adultContentSwitchHorizontalPadding">20dp</dimen>
+    <dimen name="adultContentSwitchTextSize">20sp</dimen>
+    <!-- SettingsFragment end -->
 </resources>

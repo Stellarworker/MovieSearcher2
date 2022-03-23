@@ -1,6 +1,12 @@
 <resources>
+    <!-- Common Application begin -->
     <string name="app_name">Movie Searcher 2</string>
     <string name="baseMovieAddressString">https://image.tmdb.org/t/p/%1$s%2$s</string>
+    <!-- Common Application end -->
+    <!-- MainMenu begin -->
+    <string name="mainMenuHistoryTitle">History</string>
+    <string name="mainMenuSettingsTitle">Settings</string>
+    <!-- MainMenu end -->
     <!-- MainFragment begin -->
     <string name="mainPromptText">Type something in the search line below and tap the SEARCH button</string>
     <string name="searchLineHintText">Type Here</string>
@@ -16,5 +22,19 @@
     <string name="movieGenreLabelText">Genres: </string>
     <string name="movieReleaseDateLabelText">Release date: </string>
     <string name="movieVoteAverageLabelText">Vote average: </string>
+    <string name="noteContainerHintText">Type your note here</string>
     <!-- DetailsFragment end -->
+    <!-- HistoryFragment begin -->
+    <string name="historyHeaderText">History</string>
+    <!-- HistoryFragment end -->
+    <!-- HistoryFragment RecyclerView begin -->
+    <string name="historyItemTitleText">Title: %1$s</string>
+    <string name="historyItemYearText">Year: %1$s</string>
+    <string name="historyItemViewTimeText">View time: %1$s</string>
+    <string name="historyItemNoteText">Note: %1$s</string>
+    <!-- HistoryFragment RecyclerView end -->
+    <!-- SettingsFragment begin -->
+    <string name="settingsHeaderText">Settings</string>
+    <string name="adultContentSwitchText">Show adult content</string>
+    <!-- SettingsFragment end -->
 </resources>

@@ -9,6 +9,7 @@ interface MoviesAPI {
     @GET("https://api.themoviedb.org/3/search/movie")
     fun getMovies(
         @Query("api_key") apiKey: String,
+        @Query("include_adult") includeAdult: Boolean,
         @Query("query") query: String,
     ): Call<MoviesDTO>
 }

@@ -1,6 +1,7 @@
 package com.geekbrains.moviesearcher2.utils
 
 import android.view.View
+import com.geekbrains.moviesearcher2.databinding.LoadingLayoutBinding
 import com.google.android.material.snackbar.Snackbar
 
 fun View.makeSnackbar(
@@ -19,3 +20,4 @@ fun View.show() {
 fun View.hide() {
     visibility = View.GONE
 }
+

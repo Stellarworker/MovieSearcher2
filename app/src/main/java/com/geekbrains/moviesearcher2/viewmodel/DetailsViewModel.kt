@@ -2,10 +2,13 @@ package com.geekbrains.moviesearcher2.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.geekbrains.moviesearcher2.app.App.Companion.getHistoryDao
 import com.geekbrains.moviesearcher2.model.MovieDetails
+import com.geekbrains.moviesearcher2.model.MovieDetailsInt
 import com.geekbrains.moviesearcher2.repository.details.MovieDetailsRemoteDataSource
 import com.geekbrains.moviesearcher2.repository.details.MovieDetailsRepository
 import com.geekbrains.moviesearcher2.repository.details.MovieDetailsRepositoryImpl
+import com.geekbrains.moviesearcher2.repository.local.LocalRepositoryImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,10 +18,13 @@ class DetailsViewModel(
     val movieDetailsLiveData: MutableLiveData<AppStateDetails> = MutableLiveData(),
     private val movieDetailsRepositoryImpl: MovieDetailsRepository = MovieDetailsRepositoryImpl(
         MovieDetailsRemoteDataSource()
-    )
+    ),
+    private val historyRepositoryImpl: LocalRepositoryImpl = LocalRepositoryImpl(getHistoryDao())
 ) : ViewModel() {
+
     private var movieID = -1
     private val callBack = object : Callback<MovieDetails> {
+
         override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
             val serverResponse: MovieDetails? = response.body()
             movieDetailsLiveData.postValue(
@@ -40,9 +46,9 @@ class DetailsViewModel(
             )
         }
 
-        private fun checkResponse(serverResponse: MovieDetails): AppStateDetails =
+        private fun checkResponse(serverResponse: MovieDetails) =
             if (serverResponse.title != null) {
-                AppStateDetails.Success(serverResponse)
+                AppStateDetails.Success(convertMovieDetailsToMovieDetailsInt(serverResponse))
             } else {
                 AppStateDetails.Error(Throwable(CORRUPTED_DATA))
             }
@@ -54,6 +60,15 @@ class DetailsViewModel(
         movieID = id
         movieDetailsLiveData.value = AppStateDetails.Loading
         movieDetailsRepositoryImpl.getMovieDetailsFromServer(id, callBack)
+    }
+
+    fun saveMovieDetailsIntToDB(movieDetailsInt: MovieDetailsInt) {
+        movieDetailsInt.viewTime = System.currentTimeMillis()
+        historyRepositoryImpl.saveEntity(movieDetailsInt)
+    }
+
+    fun saveNoteToDb(note: String) {
+        historyRepositoryImpl.saveNote(note)
     }
 
 }

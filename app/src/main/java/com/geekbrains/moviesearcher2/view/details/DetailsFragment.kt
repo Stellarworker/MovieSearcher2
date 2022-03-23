@@ -2,6 +2,8 @@ package com.geekbrains.moviesearcher2.view.details
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.FragmentDetailsBinding
-import com.geekbrains.moviesearcher2.model.MovieDetails
-import com.geekbrains.moviesearcher2.utils.hide
-import com.geekbrains.moviesearcher2.utils.makeIPAddress
-import com.geekbrains.moviesearcher2.utils.makeSnackbar
-import com.geekbrains.moviesearcher2.utils.show
+import com.geekbrains.moviesearcher2.model.MovieDetailsInt
+import com.geekbrains.moviesearcher2.utils.*
 import com.geekbrains.moviesearcher2.viewmodel.AppStateDetails
 import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
 
@@ -33,7 +32,6 @@ private const val POSTER_SIZE = "w342"
 private const val HIDE_ALL = 0
 private const val SHOW_LOADING = 1
 private const val SHOW_DATA = 2
-
 
 class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
@@ -57,6 +55,17 @@ class DetailsFragment : Fragment() {
         detailsViewModel.movieDetailsLiveData.observe(viewLifecycleOwner) {
             renderData(it)
         }
+        binding.noteContainer.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                detailsViewModel.saveNoteToDb(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
     }
 
     private fun renderData(appStateDetails: AppStateDetails) {
@@ -72,30 +81,29 @@ class DetailsFragment : Fragment() {
                     actionText = getString(R.string.reloadLabelText),
                     action = {
                         detailsViewModel.getMovieDetails(detailsViewModel.getMovieID())
-                    })
+                    }
+                )
             }
         }
     }
 
-    private fun setDetails(details: MovieDetails) {
+    private fun setDetails(details: MovieDetailsInt) {
+        saveMovieDetailsInt(details)
         with(binding) {
             movieTitleDataText.text = details.title
-            movieTaglineDataText.text = details.tagline
-            movieGenreDataText.text = details.genres?.map { genres -> genres.name }
-                .toString().drop(1).dropLast(1)
-            movieReleaseDateDataText.text = details.release_date
-            movieVoteAverageDataText.text = details.vote_average.toString()
+            movieTaglineDataText.text = details.tagLine
+            movieGenreDataText.text = details.genres
+            movieReleaseDateDataText.text = details.releaseDate
+            movieVoteAverageDataText.text = details.voteAverage.toString()
         }
-
-        details.poster_path?.let {
-            binding.movieDetailsPoster.load(
-                makeIPAddress(
-                    resources.getString(R.string.baseMovieAddressString),
-                    POSTER_SIZE,
-                    it
-                )
+        binding.movieDetailsPoster.load(
+            makeIPAddress(
+                resources.getString(R.string.baseMovieAddressString),
+                POSTER_SIZE,
+                details.posterPath
             )
-        }
+        )
+        binding.noteContainer.setText(details.note)
         showData()
     }
 
@@ -115,25 +123,30 @@ class DetailsFragment : Fragment() {
         with(binding) {
             when (mode) {
                 HIDE_ALL -> {
-                    loadingLayoutDetails.hide()
+                    dFIncludedLoadingLayout.loadingLayout.hide()
                     movieDetailsScrollContainer.hide()
                 }
                 SHOW_LOADING -> {
-                    loadingLayoutDetails.show()
+                    dFIncludedLoadingLayout.loadingLayout.show()
                     movieDetailsScrollContainer.hide()
                 }
                 else -> {
-                    loadingLayoutDetails.hide()
+                    dFIncludedLoadingLayout.loadingLayout.hide()
                     movieDetailsScrollContainer.show()
                 }
             }
         }
     }
 
+    private fun saveMovieDetailsInt(movieDetailsInt: MovieDetailsInt) {
+        detailsViewModel.saveMovieDetailsIntToDB(movieDetailsInt)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 
     companion object {
         fun newInstance(bundle: Bundle) = DetailsFragment().apply {

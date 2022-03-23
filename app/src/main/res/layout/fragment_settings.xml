@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settingsContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/settingsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/settingsHeaderMarginTop"
+        android:text="@string/settingsHeaderText"
+        android:textColor="@color/black"
+        android:textSize="@dimen/settingsHeaderTextSize" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/adultContentSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/adultContentSwitchMarginTop"
+        android:checked="false"
+        android:paddingHorizontal="@dimen/adultContentSwitchHorizontalPadding"
+        android:text="@string/adultContentSwitchText"
+        android:textSize="@dimen/adultContentSwitchTextSize"
+        app:switchPadding="20dp">
+
+    </androidx.appcompat.widget.SwitchCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
