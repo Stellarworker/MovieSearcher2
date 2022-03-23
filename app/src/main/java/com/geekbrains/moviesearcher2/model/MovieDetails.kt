@@ -29,7 +29,6 @@ data class SpokenLanguages(
     val name: String?
 )
 
-
 data class MovieDetails(
     val adult: Boolean?,
     val backdrop_path: String?,

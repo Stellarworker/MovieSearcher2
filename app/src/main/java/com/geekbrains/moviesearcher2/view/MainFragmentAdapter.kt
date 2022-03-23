@@ -10,6 +10,7 @@ import coil.load
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.model.MovieDTO
 import com.geekbrains.moviesearcher2.model.MoviesDTO
+import com.geekbrains.moviesearcher2.utils.convertReleaseDateToYear
 import com.geekbrains.moviesearcher2.utils.makeIPAddress
 
 /**
@@ -38,10 +39,7 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
             with(itemView) {
                 findViewById<TextView>(R.id.mainFragmentRecyclerItemTitle).text = movieDTO.title
                 findViewById<TextView>(R.id.mainFragmentRecyclerItemReleaseDate).text =
-                    String.format(
-                        resources.getString(R.string.movieReleaseDateText),
-                        movieDTO.release_date.toString().dropLast(6)
-                    )
+                    convertReleaseDateToYear(movieDTO.release_date)
                 movieDTO.poster_path?.let {
                     findViewById<ImageView>(R.id.moviePoster).load(
                         makeIPAddress(
@@ -71,7 +69,6 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
             ) as View
         )
 
-
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         movieData.results?.let {
             holder.bind(it[position])
@@ -79,5 +76,4 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     }
 
     override fun getItemCount() = movieData.results?.size ?: 0
-
 }

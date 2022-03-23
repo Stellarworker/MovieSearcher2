@@ -15,7 +15,7 @@ class MoviesRemoteDataSource {
         )
         .build().create(MoviesAPI::class.java)
 
-    fun getMovies(query: String, callback: Callback<MoviesDTO>) {
-        moviesApi.getMovies(BuildConfig.THEMOVIEDB_API_KEY, query).enqueue(callback)
+    fun getMovies(includeAdult: Boolean, query: String, callback: Callback<MoviesDTO>) {
+        moviesApi.getMovies(BuildConfig.THEMOVIEDB_API_KEY, includeAdult, query).enqueue(callback)
     }
 }

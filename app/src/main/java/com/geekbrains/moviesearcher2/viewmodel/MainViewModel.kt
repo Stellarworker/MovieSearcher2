@@ -20,6 +20,7 @@ class MainViewModel(
 ) : ViewModel() {
 
     private val callBack = object : Callback<MoviesDTO> {
+
         override fun onResponse(call: Call<MoviesDTO>, response: Response<MoviesDTO>) {
             val serverResponse: MoviesDTO? = response.body()
             moviesLiveData.postValue(
@@ -43,8 +44,8 @@ class MainViewModel(
             }
     }
 
-    fun getMovies(query: String) {
+    fun getMovies(includeAdult: Boolean, query: String) {
         moviesLiveData.value = AppState.Loading
-        moviesRepositoryImpl.getMoviesFromServer(query, callBack)
+        moviesRepositoryImpl.getMoviesFromServer(includeAdult, query, callBack)
     }
 }
