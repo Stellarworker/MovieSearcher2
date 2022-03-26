@@ -37,11 +37,11 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movieDTO: MovieDTO) {
             with(itemView) {
-                findViewById<TextView>(R.id.mainFragmentRecyclerItemTitle).text = movieDTO.title
-                findViewById<TextView>(R.id.mainFragmentRecyclerItemReleaseDate).text =
+                findViewById<TextView>(R.id.mfRecyclerViewMovieTitle).text = movieDTO.title
+                findViewById<TextView>(R.id.mfRecyclerViewMovieYear).text =
                     convertReleaseDateToYear(movieDTO.release_date)
                 movieDTO.poster_path?.let {
-                    findViewById<ImageView>(R.id.moviePoster).load(
+                    findViewById<ImageView>(R.id.mfRecyclerViewMoviePoster).load(
                         makeIPAddress(
                             resources.getString(R.string.baseMovieAddressString),
                             POSTER_SIZE,

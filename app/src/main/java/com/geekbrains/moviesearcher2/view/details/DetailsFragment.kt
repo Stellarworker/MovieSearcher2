@@ -79,6 +79,7 @@ class DetailsFragment : Fragment() {
                 binding.root.makeSnackbar(
                     text = appStateDetails.error.message ?: getString(R.string.errorLabelText),
                     actionText = getString(R.string.reloadLabelText),
+                    anchor = activity?.findViewById(R.id.bottomNavigation),
                     action = {
                         detailsViewModel.getMovieDetails(detailsViewModel.getMovieID())
                     }
@@ -149,8 +150,9 @@ class DetailsFragment : Fragment() {
 
 
     companion object {
-        fun newInstance(bundle: Bundle) = DetailsFragment().apply {
-            arguments = bundle
-        }
+        const val FRAGMENT_TAG = "DETAILS_FRAGMENT"
+
+        @JvmStatic
+        fun newInstance() = DetailsFragment()
     }
 }

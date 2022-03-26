@@ -12,7 +12,6 @@ import com.geekbrains.moviesearcher2.databinding.FragmentHistoryBinding
 import com.geekbrains.moviesearcher2.utils.hide
 import com.geekbrains.moviesearcher2.utils.makeSnackbar
 import com.geekbrains.moviesearcher2.utils.show
-import com.geekbrains.moviesearcher2.view.settings.SettingsFragment
 import com.geekbrains.moviesearcher2.viewmodel.AppStateHistory
 import com.geekbrains.moviesearcher2.viewmodel.HistoryViewModel
 
@@ -70,6 +69,7 @@ class HistoryFragment : Fragment() {
                     historyFragmentRecyclerView.makeSnackbar(
                         text = getString(R.string.errorLabelText),
                         actionText = getString(R.string.reloadLabelText),
+                        anchor = activity?.findViewById(R.id.bottomNavigation),
                         action = {
                             viewModel.getAllHistory()
                         }
@@ -85,6 +85,8 @@ class HistoryFragment : Fragment() {
     }
 
     companion object {
+        const val FRAGMENT_TAG = "HISTORY_FRAGMENT"
+
         @JvmStatic
         fun newInstance() = HistoryFragment()
     }

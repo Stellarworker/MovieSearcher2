@@ -1,15 +1,19 @@
 package com.geekbrains.moviesearcher2.utils
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.model.MovieDetails
 import com.geekbrains.moviesearcher2.model.MovieDetailsInt
 import com.geekbrains.moviesearcher2.model.room.HistoryEntity
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import kotlin.math.max
 
 const val SERVER_ERROR = "Server error"
 const val REQUEST_ERROR = "Request error"
 const val CORRUPTED_DATA = "Corrupted data"
-const val ALLOW_ADULT_CONTENT = "ALLOW_ADULT_CONTENT"
+const val SHOW_ADULT_CONTENT = "SHOW_ADULT_CONTENT"
 const val DATE_TIME_PATTERN = "dd.MM.yyyy, HH:mm:ss"
 
 fun makeIPAddress(baseAddress: String, posterSize: String, posterPath: String) =
@@ -65,3 +69,22 @@ fun convertMovieDetailsIntToHistoryEntity(movieDetailsInt: MovieDetailsInt) =
 
 fun convertMillisToDate(time: Long, pattern: String) =
     SimpleDateFormat(pattern).format(time)
+
+fun loadFragment(fragment: Fragment, fragmentTag: String, manager: FragmentManager) = run {
+    val fragmentPopped = manager.popBackStackImmediate(
+        fragmentTag,
+        0
+    );
+    if (!fragmentPopped &&
+        manager.findFragmentByTag(fragmentTag) == null
+    ) {
+        manager.apply {
+            beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(fragmentTag)
+                .commitAllowingStateLoss()
+        }
+    }
+    true
+}
+

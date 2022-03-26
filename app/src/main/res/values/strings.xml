@@ -3,9 +3,15 @@
     <string name="app_name">Movie Searcher 2</string>
     <string name="baseMovieAddressString">https://image.tmdb.org/t/p/%1$s%2$s</string>
     <!-- Common Application end -->
+    <!-- Broadcast Receiver begin -->
+    <string name="mainBRSystemMessageText">System message:\n</string>
+    <string name="mainBRActionText">Action: %1$s</string>
+    <!-- Broadcast Receiver begin -->
     <!-- MainMenu begin -->
+    <string name="mainMenuHomeTitle">Home</string>
     <string name="mainMenuHistoryTitle">History</string>
     <string name="mainMenuSettingsTitle">Settings</string>
+    <string name="mainMenuContactsTitle">Contacts</string>
     <!-- MainMenu end -->
     <!-- MainFragment begin -->
     <string name="mainPromptText">Type something in the search line below and tap the SEARCH button</string>
@@ -37,4 +43,12 @@
     <string name="settingsHeaderText">Settings</string>
     <string name="adultContentSwitchText">Show adult content</string>
     <!-- SettingsFragment end -->
+    <!-- ContactsFragment begin -->
+    <string name="contactsHeaderText">Contacts</string>
+    <string name="contactsDialogTitle">Access to contacts</string>
+    <string name="contactsDialogMessage">Access to contacts is needed to show them</string>
+    <string name="contactsDialogAccept">Accept</string>
+    <string name="contactsDialogDeny">Deny</string>
+    <string name="contactsDialogClose">Close</string>
+    <!-- ContactsFragment end -->
 </resources>

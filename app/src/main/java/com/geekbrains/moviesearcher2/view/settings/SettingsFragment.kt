@@ -7,7 +7,7 @@ import com.geekbrains.moviesearcher2.databinding.FragmentSettingsBinding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.geekbrains.moviesearcher2.utils.ALLOW_ADULT_CONTENT
+import com.geekbrains.moviesearcher2.utils.SHOW_ADULT_CONTENT
 
 class SettingsFragment : Fragment() {
 
@@ -33,14 +33,14 @@ class SettingsFragment : Fragment() {
     private fun restoreAdultContentStatus() {
         activity?.let {
             binding.adultContentSwitch.isChecked =
-                it.getPreferences(Context.MODE_PRIVATE).getBoolean(ALLOW_ADULT_CONTENT, false)
+                it.getPreferences(Context.MODE_PRIVATE).getBoolean(SHOW_ADULT_CONTENT, false)
         }
     }
 
     private fun saveAdultContentStatus(status: Boolean) {
         activity?.let {
             with(it.getPreferences(Context.MODE_PRIVATE).edit()) {
-                putBoolean(ALLOW_ADULT_CONTENT, status)
+                putBoolean(SHOW_ADULT_CONTENT, status)
                 apply()
             }
         }
@@ -52,8 +52,9 @@ class SettingsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(bundle: Bundle) = SettingsFragment().apply {
-            arguments = bundle
-        }
+        const val FRAGMENT_TAG = "SETTINGS_FRAGMENT"
+
+        @JvmStatic
+        fun newInstance() = SettingsFragment()
     }
 }

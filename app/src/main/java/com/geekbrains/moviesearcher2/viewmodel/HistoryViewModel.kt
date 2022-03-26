@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.geekbrains.moviesearcher2.app.App
+import com.geekbrains.moviesearcher2.config.DEBUG_MODE
 import com.geekbrains.moviesearcher2.repository.local.LocalRepositoryImpl
 
 class HistoryViewModel(
@@ -19,7 +20,11 @@ class HistoryViewModel(
                 historyLiveData.postValue(AppStateHistory.Success(historyRepositoryImpl.getAllHistory()))
             }.start()
         } catch (e: Throwable) {
-            e.message?.let { Log.d(TAG, it) }
+            if (DEBUG_MODE) {
+                e.message?.let {
+                    Log.d(TAG, it)
+                }
+            }
         }
     }
 }

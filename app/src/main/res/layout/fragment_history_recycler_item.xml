@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/hFItemContainer"
+    android:id="@+id/hfRecyclerViewItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/itemContainerMarginStart"
-    android:layout_marginTop="@dimen/itemContainerMarginTop"
-    android:layout_marginEnd="@dimen/itemContainerMarginEnd"
-    app:cardCornerRadius="@dimen/itemContainerCardCornerRadius"
-    app:cardElevation="@dimen/itemContainerCardElevation">
+    android:layout_margin="@dimen/hfRecyclerViewItemMargin"
+    app:cardCornerRadius="@dimen/hfRecyclerViewItemCardCornerRadius"
+    app:cardElevation="@dimen/hfRecyclerViewItemCardElevation">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/hfRecyclerViewDataContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/hfRecyclerViewDataContainerMargin"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/itemPadding">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/hFRecyclerItemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/hFItemTextSize"
+            android:textSize="@dimen/hfRecyclerViewItemTextSize"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/hFRecyclerItemReleaseDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/hFItemTextSize" />
+            android:textSize="@dimen/hfRecyclerViewItemTextSize" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/hFRecyclerItemTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/hFItemTextSize" />
+            android:textSize="@dimen/hfRecyclerViewItemTextSize" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/hFRecyclerItemNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/hFItemTextSize"
+            android:textSize="@dimen/hfRecyclerViewItemTextSize"
             android:visibility="gone" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

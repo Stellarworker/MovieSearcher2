@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".view.MainActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/mainPrompt"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mfDataContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mainPromptMarginTop"
-        android:text="@string/mainPromptText"
-        android:textAlignment="center" />
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/mfDataContainerMarginHorizontal"
+        android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/searchLine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mainPromptMarginTop"
-        android:hint="@string/searchLineHintText"
-        android:textAlignment="textStart" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mfMainPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mfCommonMarginTop"
+            android:text="@string/mainPromptText"
+            android:textAlignment="center" />
 
-    <include
-        android:id="@+id/mFIncludedLoadingLayout"
-        layout="@layout/loading_layout" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/mfSearchLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mfCommonMarginTop"
+            android:hint="@string/searchLineHintText"
+            android:textAlignment="textStart" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/searchButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/searchButtonMarginTop"
-        android:text="@string/searchButtonText" />
+        <include
+            android:id="@+id/mfIncludedLoadingLayout"
+            layout="@layout/loading_layout" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainFragmentRecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/recyclerViewMarginTop"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mfSearchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mfCommonMarginTop"
+            android:text="@string/searchButtonText" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mfRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mfCommonMarginTop"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>
