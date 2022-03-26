@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- MainFragment begin -->
-    <dimen name="mainPromptMarginTop">5dp</dimen>
-    <dimen name="searchLineMarginTop">5dp</dimen>
-    <dimen name="searchButtonMarginTop">5dp</dimen>
-    <dimen name="recyclerViewMarginTop">5dp</dimen>
-    <dimen name="movieTablePadding">5dp</dimen>
-    <dimen name="movieTableMarginStart">10dp</dimen>
-    <dimen name="movieTableMargin">1dp</dimen>
+    <dimen name="mfDataContainerMarginHorizontal">5dp</dimen>
+    <dimen name="mfCommonMarginTop">5dp</dimen>
     <!-- MainFragment end-->
     <!-- MainFragment RecyclerView begin-->
-    <dimen name="itemContainerMarginStart">5dp</dimen>
-    <dimen name="itemContainerMarginEnd">5dp</dimen>
-    <dimen name="itemContainerMarginTop">5dp</dimen>
-    <dimen name="itemContainerCardCornerRadius">3dp</dimen>
-    <dimen name="itemContainerCardElevation">5dp</dimen>
-    <dimen name="itemPadding">5dp</dimen>
-    <dimen name="itemMovieTitleTextSize">15sp</dimen>
-    <dimen name="itemMovieYearTextSize">15sp</dimen>
+    <dimen name="mfRecyclerViewItemMargin">5dp</dimen>
+    <dimen name="mfRecyclerViewItemCardCornerRadius">3dp</dimen>
+    <dimen name="mfRecyclerViewItemCardElevation">5dp</dimen>
+    <dimen name="mfRecyclerViewDataContainerMargin">3dp</dimen>
+    <dimen name="mfRecyclerViewMovieTitleTextSize">15sp</dimen>
+    <dimen name="mfRecyclerViewMovieYearTextSize">15sp</dimen>
     <!-- MainFragment RecyclerView end-->
     <!-- DetailsFragment begin -->
     <dimen name="mainHeaderTextSize">30sp</dimen>
@@ -32,12 +25,17 @@
     <dimen name="movieInfoScreenMarginBottom">50dp</dimen>
     <!-- DetailsFragment end -->
     <!-- HistoryFragment begin -->
+    <dimen name="hfRecyclerViewMarginTop">5dp</dimen>
     <dimen name="historyHeaderTextSize">30sp</dimen>
     <dimen name="adultContentSwitchMarginTop">20dp</dimen>
     <dimen name="adultContentSwitchSwitchPadding">20dp</dimen>
     <!-- HistoryFragment end -->
     <!-- HistoryFragment RecyclerView begin -->
-    <dimen name="hFItemTextSize">15sp</dimen>
+    <dimen name="hfRecyclerViewItemMargin">5dp</dimen>
+    <dimen name="hfRecyclerViewItemCardCornerRadius">3dp</dimen>
+    <dimen name="hfRecyclerViewItemCardElevation">5dp</dimen>
+    <dimen name="hfRecyclerViewDataContainerMargin">3dp</dimen>
+    <dimen name="hfRecyclerViewItemTextSize">15sp</dimen>
     <!-- HistoryFragment RecyclerView end -->
     <!-- SettingsFragment begin -->
     <dimen name="settingsHeaderTextSize">30sp</dimen>
@@ -45,4 +43,10 @@
     <dimen name="adultContentSwitchHorizontalPadding">20dp</dimen>
     <dimen name="adultContentSwitchTextSize">20sp</dimen>
     <!-- SettingsFragment end -->
+    <!-- ContactsFragment begin -->
+    <dimen name="contactsHeaderText">30sp</dimen>
+    <dimen name="contactsHeaderMarginTop">10dp</dimen>
+    <dimen name="contactsHeaderMarginBottom">20dp</dimen>
+    <dimen name="contactsTextSize">15sp</dimen>
+    <!-- ContactsFragment end -->
 </resources>

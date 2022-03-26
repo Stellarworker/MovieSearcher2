@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/itemContainer"
+    android:id="@+id/mfRecyclerViewItem"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/itemContainerMarginStart"
-    android:layout_marginTop="@dimen/itemContainerMarginTop"
-    android:layout_marginEnd="@dimen/itemContainerMarginEnd"
-    app:cardCornerRadius="@dimen/itemContainerCardCornerRadius"
-    app:cardElevation="@dimen/itemContainerCardElevation">
+    android:layout_margin="@dimen/mfRecyclerViewItemMargin"
+    app:cardCornerRadius="@dimen/mfRecyclerViewItemCardCornerRadius"
+    app:cardElevation="@dimen/mfRecyclerViewItemCardElevation">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mfRecyclerViewDataContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/mfRecyclerViewDataContainerMargin"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/itemPadding">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/moviePoster"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="center" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mainFragmentRecyclerItemTitle"
+            android:id="@+id/mfRecyclerViewMoviePoster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="fitCenter" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mfRecyclerViewMovieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:gravity="center"
-            android:textSize="@dimen/itemMovieTitleTextSize" />
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/mfRecyclerViewMovieTitleTextSize" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mainFragmentRecyclerItemReleaseDate"
+            android:id="@+id/mfRecyclerViewMovieYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/itemMovieYearTextSize" />
+            android:textSize="@dimen/mfRecyclerViewMovieYearTextSize" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>

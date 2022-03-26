@@ -8,14 +8,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainActivityBinding
+import com.geekbrains.moviesearcher2.utils.loadFragment
+import com.geekbrains.moviesearcher2.view.contacts.ContactsFragment
 import com.geekbrains.moviesearcher2.view.history.HistoryFragment
 import com.geekbrains.moviesearcher2.view.settings.SettingsFragment
-
-private const val HISTORY_FRAGMENT_STRING = "HISTORY_FRAGMENT_STRING"
-private const val SETTINGS_FRAGMENT_STRING = "SETTINGS_FRAGMENT_STRING"
+import okhttp3.internal.notifyAll
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,11 +29,41 @@ class MainActivity : AppCompatActivity() {
         savedInstanceState?.let {
             // TODO
         } ?: run {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
+            loadFragment(
+                MainFragment.newInstance(),
+                MainFragment.FRAGMENT_TAG,
+                supportFragmentManager
+            )
         }
         registerReceiver(receiver, IntentFilter(Intent.ACTION_POWER_CONNECTED))
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
+
+            when (item.itemId) {
+                R.id.itemMenuSettings -> loadFragment(
+                    SettingsFragment.newInstance(),
+                    SettingsFragment.FRAGMENT_TAG,
+                    supportFragmentManager
+                )
+                R.id.itemMenuHistory -> loadFragment(
+                    HistoryFragment.newInstance(),
+                    HistoryFragment.FRAGMENT_TAG,
+                    supportFragmentManager
+                )
+                R.id.itemMenuContacts -> loadFragment(
+                    ContactsFragment.newInstance(),
+                    ContactsFragment.FRAGMENT_TAG,
+                    supportFragmentManager
+                )
+                R.id.itemMenuHome ->
+                    loadFragment(
+                        MainFragment.newInstance(),
+                        MainFragment.FRAGMENT_TAG,
+                        supportFragmentManager
+                    )
+
+                else -> false
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -42,32 +71,11 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?) = run {
-        menuInflater.inflate(R.menu.main_screen_menu, menu)
-        super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) =
-        when (item.itemId) {
-            R.id.mainMenuHistory -> loadFragment(
-                HistoryFragment.newInstance(),
-                HISTORY_FRAGMENT_STRING
-            )
-            R.id.mainMenuSettings -> loadFragment(
-                SettingsFragment.newInstance(Bundle()),
-                SETTINGS_FRAGMENT_STRING
-            )
-            else -> super.onOptionsItemSelected(item)
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            finish();
+        } else {
+            super.onBackPressed();
         }
-
-
-    private fun loadFragment(fragment: Fragment, fragmentString: String) = run {
-        supportFragmentManager.apply {
-            beginTransaction()
-                .replace(R.id.container, fragment)
-                .addToBackStack(fragmentString)
-                .commitAllowingStateLoss()
-        }
-        true
     }
 }

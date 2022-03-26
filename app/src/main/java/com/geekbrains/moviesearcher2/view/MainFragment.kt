@@ -9,17 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.GridLayoutManager
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainFragmentBinding
 import com.geekbrains.moviesearcher2.model.MovieDTO
-import com.geekbrains.moviesearcher2.utils.ALLOW_ADULT_CONTENT
+import com.geekbrains.moviesearcher2.utils.*
 import com.geekbrains.moviesearcher2.view.details.DetailsFragment
 import com.geekbrains.moviesearcher2.viewmodel.AppState
 import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
 import com.geekbrains.moviesearcher2.viewmodel.MainViewModel
-import com.geekbrains.moviesearcher2.utils.makeSnackbar
-import com.geekbrains.moviesearcher2.utils.show
-import com.geekbrains.moviesearcher2.utils.hide
 
 @RequiresApi(Build.VERSION_CODES.N)
 class MainFragment : Fragment() {
@@ -35,20 +33,13 @@ class MainFragment : Fragment() {
     private var query: String = ""
     private var includeAdult = false
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
         override fun onItemViewClick(movieDTO: MovieDTO) {
             movieDTO.id?.let {
                 detailsViewModel.getMovieDetails(it)
             }
-            activity?.supportFragmentManager?.apply {
-                beginTransaction()
-                    .replace(R.id.container, DetailsFragment.newInstance(Bundle()))
-                    .addToBackStack("MainFragment")
-                    .commitAllowingStateLoss()
+            activity?.supportFragmentManager?.let {
+                loadFragment(DetailsFragment.newInstance(), DetailsFragment.FRAGMENT_TAG, it)
             }
         }
     })
@@ -64,18 +55,20 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mFIncludedLoadingLayout.loadingLayout.hide()
+        binding.mfIncludedLoadingLayout.loadingLayout.hide()
+        binding.mfRecyclerView.layoutManager = GridLayoutManager(context, 3)
         activity?.let {
             includeAdult =
-                it.getPreferences(Context.MODE_PRIVATE).getBoolean(ALLOW_ADULT_CONTENT, false)
+                it.getPreferences(Context.MODE_PRIVATE).getBoolean(SHOW_ADULT_CONTENT, false)
         }
         mainViewModel.moviesLiveData.observe(viewLifecycleOwner) {
             renderData(it)
         }
         binding.apply {
-            mainFragmentRecyclerView.adapter = adapter
-            searchButton.setOnClickListener {
-                searchLine.run {
+            mfRecyclerView.adapter = adapter
+            mfSearchButton.setOnClickListener {
+                view.hideKeyboard()
+                mfSearchLine.run {
                     query = text.toString().trim()
                     startSearching(query)
                     text?.clear()
@@ -87,7 +80,10 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun startSearching(query: String) {
         when (query) {
-            "" -> binding.root.makeSnackbar(text = getString(R.string.emptyRequestLabelText))
+            "" -> binding.root.makeSnackbar(
+                text = getString(R.string.emptyRequestLabelText),
+                anchor = activity?.findViewById(R.id.bottomNavigation)
+            )
             else -> mainViewModel.getMovies(includeAdult, query)
         }
     }
@@ -96,20 +92,22 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
-                binding.mFIncludedLoadingLayout.loadingLayout.hide()
+                binding.mfIncludedLoadingLayout.loadingLayout.hide()
                 when (appState.movieData.results?.size) {
                     0 -> binding.root.makeSnackbar(
-                        text = getString(R.string.nothingFoundLabelText)
+                        text = getString(R.string.nothingFoundLabelText),
+                        anchor = activity?.findViewById(R.id.bottomNavigation)
                     )
                     else -> adapter.setMovie(appState.movieData)
                 }
             }
-            is AppState.Loading -> binding.mFIncludedLoadingLayout.loadingLayout.show()
+            is AppState.Loading -> binding.mfIncludedLoadingLayout.loadingLayout.show()
             is AppState.Error -> {
-                binding.mFIncludedLoadingLayout.loadingLayout.hide()
+                binding.mfIncludedLoadingLayout.loadingLayout.hide()
                 binding.root.makeSnackbar(
                     text = appState.error.message ?: getString(R.string.errorLabelText),
                     actionText = getString(R.string.reloadLabelText),
+                    anchor = activity?.findViewById(R.id.bottomNavigation),
                     action = {
                         mainViewModel.getMovies(includeAdult, query)
                     })
@@ -120,5 +118,12 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val FRAGMENT_TAG = "MAIN_FRAGMENT"
+
+        @JvmStatic
+        fun newInstance() = MainFragment()
     }
 }

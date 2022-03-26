@@ -1,6 +1,7 @@
 package com.geekbrains.moviesearcher2.repository.local
 
 import android.util.Log
+import com.geekbrains.moviesearcher2.config.DEBUG_MODE
 import com.geekbrains.moviesearcher2.model.MovieDetailsInt
 import com.geekbrains.moviesearcher2.model.room.HistoryDao
 import com.geekbrains.moviesearcher2.utils.convertHistoryEntityToMovieDetailsInt
@@ -17,7 +18,11 @@ class LocalRepositoryImpl(private val localDataSource: HistoryDao) : LocalReposi
                 localDataSource.insert(convertMovieDetailsIntToHistoryEntity(movieDetailsInt))
             }.start()
         } catch (e: Throwable) {
-            e.message?.let { Log.d(TAG, it) }
+            if (DEBUG_MODE) {
+                e.message?.let {
+                    Log.d(TAG, it)
+                }
+            }
         }
     }
 
@@ -27,7 +32,11 @@ class LocalRepositoryImpl(private val localDataSource: HistoryDao) : LocalReposi
                 localDataSource.updateLastNote(note)
             }.start()
         } catch (e: Throwable) {
-            e.message?.let { Log.d(TAG, it) }
+            if (DEBUG_MODE) {
+                e.message?.let {
+                    Log.d(TAG, it)
+                }
+            }
         }
     }
 }
