@@ -1,138 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/movieInfoContainer"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentDetails"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <include
-        android:id="@+id/dFIncludedLoadingLayout"
+        android:id="@+id/dfIncludedLoadingLayout"
         layout="@layout/loading_layout" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/movieDetailsScrollContainer"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/dfDataContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="invisible">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/movieInfoScreen"
+        <ScrollView
+            android:id="@+id/dfScrollContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/movieInfoScreenMarginHorizontal"
-            android:layout_marginBottom="@dimen/movieInfoScreenMarginBottom"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieTitleDataText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mainHeaderMarginTop"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/mainHeaderTextSize" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/movieDetailsPoster"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/movieDetailsPosterMarginTop"
-                android:scaleType="center" />
+                android:layout_marginBottom="@dimen/dfInfoScreenMarginBottom"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TableLayout
-                android:id="@+id/movieInfoTable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/movieInfoTableMarginTop"
-                android:layout_marginBottom="@dimen/movieInfoTableMarginBottom">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/dfMovieTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dfMovieTitleMarginHorizontal"
+                    android:layout_marginTop="@dimen/dfMovieTitleMarginTop"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dfMovieTitleTextSize" />
 
-                <TableRow>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/dfMoviePoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dfMoviePosterMarginTop"
+                    android:scaleType="centerInside" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/dfInterfaceContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dfInterfaceContainerMarginHorizontal"
+                    android:layout_marginTop="@dimen/dfInterfaceContainerMarginTop"
+                    android:layout_marginBottom="@dimen/dfInterfaceContainerMarginBottom"
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/movieTaglineLabelText"
+                        android:layout_gravity="start"
+                        android:text="@string/dfMovieTaglineLabel"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/movieTaglineDataText"
+                        android:id="@+id/dfMovieTaglineData"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
-
-                </TableRow>
-
-                <TableRow>
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/dfMovieDataMarginStart"
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/movieGenreLabelText"
+                        android:layout_gravity="start"
+                        android:text="@string/dfMovieGenreLabel"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/movieGenreDataText"
-                        android:layout_width="match_parent"
+                        android:id="@+id/dfMovieGenreData"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
-
-                </TableRow>
-
-                <TableRow>
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/dfMovieDataMarginStart"
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/movieReleaseDateLabelText"
+                        android:layout_gravity="start"
+                        android:text="@string/dfMovieReleaseDateLabel"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/movieReleaseDateDataText"
-                        android:layout_width="match_parent"
+                        android:id="@+id/dfMovieReleaseDateData"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
-                </TableRow>
-
-                <TableRow>
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/dfMovieDataMarginStart"
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/movieVoteAverageLabelText"
+                        android:layout_gravity="start"
+                        android:text="@string/dfMovieVoteAverageLabel"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/movieVoteAverageDataText"
+                        android:id="@+id/dfMovieVoteAverageData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/dfMovieDataMarginStart"
+                        android:textSize="@dimen/dfMovieInfoTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/dfNoteContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/movieInfoTablePaddingHorizontal"
-                        android:textSize="@dimen/movieInfoTableTextSize" />
+                        android:layout_marginTop="@dimen/dfNoteContainerMarginTop"
+                        android:hint="@string/dfNoteContainerHint"
+                        android:textAlignment="textStart">
 
-                </TableRow>
+                    </androidx.appcompat.widget.AppCompatEditText>
 
-            </TableLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/dfSaveNoteButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dfSaveNoteButtonMarginTop"
+                        android:text="@string/dfSaveNoteButton">
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/noteContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/noteContainerHintText"
-                android:textAlignment="textStart">
-
-            </androidx.appcompat.widget.AppCompatEditText>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.core.widget.NestedScrollView>
-</androidx.appcompat.widget.LinearLayoutCompat>
-
+                    </com.google.android.material.button.MaterialButton>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

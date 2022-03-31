@@ -1,54 +1,62 @@
 <resources>
+
     <!-- Common Application begin -->
     <string name="app_name">Movie Searcher 2</string>
     <string name="baseMovieAddressString">https://image.tmdb.org/t/p/%1$s%2$s</string>
+    <string name="errorLoadingData">Error loading data!</string>
+    <string name="reload">Reload</string>
+    <string name="nothingFound">"Nothing has been found!"</string>
+    <string name="emptyRequest">Empty request!</string>
     <!-- Common Application end -->
+
     <!-- Broadcast Receiver begin -->
-    <string name="mainBRSystemMessageText">System message:\n</string>
-    <string name="mainBRActionText">Action: %1$s</string>
+    <string name="mainBRSystemMessage">System message:\n</string>
+    <string name="mainBRAction">Action: %1$s</string>
     <!-- Broadcast Receiver begin -->
+
     <!-- MainMenu begin -->
-    <string name="mainMenuHomeTitle">Home</string>
-    <string name="mainMenuHistoryTitle">History</string>
-    <string name="mainMenuSettingsTitle">Settings</string>
-    <string name="mainMenuContactsTitle">Contacts</string>
+    <string name="bottomMenuHome">Home</string>
+    <string name="bottomMenuHistory">History</string>
+    <string name="bottomMenuSettings">Settings</string>
+    <string name="bottomMenuMaps">Maps</string>
     <!-- MainMenu end -->
+
     <!-- MainFragment begin -->
-    <string name="mainPromptText">Type something in the search line below and tap the SEARCH button</string>
-    <string name="searchLineHintText">Type Here</string>
-    <string name="searchButtonText">SEARCH</string>
-    <string name="movieReleaseDateText">(%1$s)</string>
-    <string name="emptyRequestLabelText">Empty request!</string>
-    <string name="nothingFoundLabelText">"Nothing has been found!"</string>
-    <string name="errorLabelText">Error loading data!</string>
-    <string name="reloadLabelText">Reload</string>
+    <string name="mfMainPrompt">Type something in the search line below
+        and tap the SEARCH button</string>
+    <string name="mfSearchLineHint">Type Here</string>
+    <string name="mfSearchButton">SEARCH</string>
     <!-- MainFragment end -->
+
     <!-- DetailsFragment begin -->
-    <string name="movieTaglineLabelText">Tagline: </string>
-    <string name="movieGenreLabelText">Genres: </string>
-    <string name="movieReleaseDateLabelText">Release date: </string>
-    <string name="movieVoteAverageLabelText">Vote average: </string>
-    <string name="noteContainerHintText">Type your note here</string>
+    <string name="dfMovieTaglineLabel">Tagline: </string>
+    <string name="dfMovieGenreLabel">Genres: </string>
+    <string name="dfMovieReleaseDateLabel">Release date: </string>
+    <string name="dfMovieVoteAverageLabel">Vote average: </string>
+    <string name="dfNoteContainerHint">Type your note here</string>
+    <string name="dfSaveNoteButton">Save note</string>
+    <string name="dfNoteSaved">Your note has been saved!</string>
     <!-- DetailsFragment end -->
+
     <!-- HistoryFragment begin -->
-    <string name="historyHeaderText">History</string>
+    <string name="hfMainHeader">History</string>
     <!-- HistoryFragment end -->
+
     <!-- HistoryFragment RecyclerView begin -->
-    <string name="historyItemTitleText">Title: %1$s</string>
-    <string name="historyItemYearText">Year: %1$s</string>
-    <string name="historyItemViewTimeText">View time: %1$s</string>
-    <string name="historyItemNoteText">Note: %1$s</string>
+    <string name="hfRecyclerViewItemTitle">Title: %1$s</string>
+    <string name="hfRecyclerViewItemYear">Year: %1$s</string>
+    <string name="hfRecyclerViewItemViewTime">View time: %1$s</string>
+    <string name="hfRecyclerViewItemNote">Note: %1$s</string>
     <!-- HistoryFragment RecyclerView end -->
+
     <!-- SettingsFragment begin -->
-    <string name="settingsHeaderText">Settings</string>
-    <string name="adultContentSwitchText">Show adult content</string>
+    <string name="sfMainHeader">Settings</string>
+    <string name="sfAdultContentSwitch">Show adult content</string>
     <!-- SettingsFragment end -->
-    <!-- ContactsFragment begin -->
-    <string name="contactsHeaderText">Contacts</string>
-    <string name="contactsDialogTitle">Access to contacts</string>
-    <string name="contactsDialogMessage">Access to contacts is needed to show them</string>
-    <string name="contactsDialogAccept">Accept</string>
-    <string name="contactsDialogDeny">Deny</string>
-    <string name="contactsDialogClose">Close</string>
-    <!-- ContactsFragment end -->
+
+    <!-- MapsFragment begin -->
+    <string name="mapfSearchStringHint">Address or coordinates</string>
+    <string name="mapfSearchButton">GO!</string>
+    <!-- MapsFragment end -->
+
 </resources>

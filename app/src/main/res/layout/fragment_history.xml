@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/historyContainer"
+    android:id="@+id/fragmentHistory"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <include
-        android:id="@+id/hFIncludedLoadingLayout"
+        android:id="@+id/hfIncludedLoadingLayout"
         layout="@layout/loading_layout" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/historyHeaderText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mainHeaderMarginTop"
-        android:gravity="center"
-        android:text="@string/historyHeaderText"
-        android:textColor="@color/black"
-        android:textSize="@dimen/historyHeaderTextSize" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyFragmentRecyclerView"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/hfDataContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/hfRecyclerViewMarginTop"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/hfDataContainerMarginHorizontal"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:visibility="gone">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/hfMainHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/hfMainHeaderMarginTop"
+            android:gravity="center"
+            android:text="@string/hfMainHeader"
+            android:textColor="@color/black"
+            android:textSize="@dimen/hfMainHeaderTextSize" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hfRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/hfRecyclerViewMarginTop"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

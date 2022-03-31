@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentMaps"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapfMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.maps.MapsFragment" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/mapfInterfaceContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/mapfSearchString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/mapfSearchStringMarginHorizontal"
+                android:layout_weight="1"
+                android:ems="12"
+                android:hint="@string/mapfSearchStringHint">
+
+            </androidx.appcompat.widget.AppCompatEditText>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mapfSearchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/mapfSearchButtonMarginHorizontal"
+                android:layout_weight="1"
+                android:text="@string/mapfSearchButton">
+
+            </com.google.android.material.button.MaterialButton>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
+
+</FrameLayout>

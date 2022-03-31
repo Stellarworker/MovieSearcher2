@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/mfCommonMarginTop"
-            android:text="@string/mainPromptText"
+            android:text="@string/mfMainPrompt"
             android:textAlignment="center" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/mfCommonMarginTop"
-            android:hint="@string/searchLineHintText"
+            android:hint="@string/mfSearchLineHint"
             android:textAlignment="textStart" />
 
         <include
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/mfCommonMarginTop"
-            android:text="@string/searchButtonText" />
+            android:text="@string/mfSearchButton" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mfRecyclerView"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/mfCommonMarginTop"
             android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </FrameLayout>

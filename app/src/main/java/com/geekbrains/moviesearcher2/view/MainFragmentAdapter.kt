@@ -23,7 +23,7 @@ import com.geekbrains.moviesearcher2.utils.makeIPAddress
  * 5   "w780"
  * 6   "original"
  */
-private const val POSTER_SIZE = "w185"
+private const val POSTER_SIZE = "w500"
 
 class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
@@ -37,7 +37,8 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movieDTO: MovieDTO) {
             with(itemView) {
-                findViewById<TextView>(R.id.mfRecyclerViewMovieTitle).text = movieDTO.title
+                findViewById<TextView>(R.id.mfRecyclerViewMovieTitle).text =
+                    movieDTO.title
                 findViewById<TextView>(R.id.mfRecyclerViewMovieYear).text =
                     convertReleaseDateToYear(movieDTO.release_date)
                 movieDTO.poster_path?.let {

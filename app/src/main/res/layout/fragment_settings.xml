@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/settingsContainer"
+    android:id="@+id/fragmentSettings"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/settingsHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/settingsHeaderMarginTop"
-        android:text="@string/settingsHeaderText"
-        android:textColor="@color/black"
-        android:textSize="@dimen/settingsHeaderTextSize" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/sfDataContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/sfDataContainerMarginHorizontal"
+        android:orientation="vertical">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/adultContentSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/adultContentSwitchMarginTop"
-        android:checked="false"
-        android:paddingHorizontal="@dimen/adultContentSwitchHorizontalPadding"
-        android:text="@string/adultContentSwitchText"
-        android:textSize="@dimen/adultContentSwitchTextSize"
-        app:switchPadding="20dp">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sfMainHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/sfMainHeaderMarginTop"
+            android:text="@string/sfMainHeader"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sfMainHeaderTextSize" />
 
-    </androidx.appcompat.widget.SwitchCompat>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sfAdultContentSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/sfAdultContentSwitchMarginTop"
+            android:checked="false"
+            android:paddingHorizontal="@dimen/sfAdultContentSwitchHorizontalPadding"
+            android:text="@string/sfAdultContentSwitch"
+            android:textSize="@dimen/sfAdultContentSwitchTextSize"
+            app:switchPadding="@dimen/sfAdultContentSwitchSwitchPadding">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.SwitchCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

@@ -9,5 +9,5 @@ data class MovieDetailsInt(
     val releaseDate: String = "",
     val voteAverage: Double = 0.0,
     var viewTime: Long = -1,
-    val note: String = ""
+    var note: String = ""
 )

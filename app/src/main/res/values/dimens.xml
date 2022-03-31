@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- MainActivity begin -->
+    <dimen name="maFragmentContainerHeight">0dp</dimen>
+    <!-- MainActivity end-->
+
     <!-- MainFragment begin -->
     <dimen name="mfDataContainerMarginHorizontal">5dp</dimen>
     <dimen name="mfCommonMarginTop">5dp</dimen>
     <!-- MainFragment end-->
+
     <!-- MainFragment RecyclerView begin-->
     <dimen name="mfRecyclerViewItemMargin">5dp</dimen>
     <dimen name="mfRecyclerViewItemCardCornerRadius">3dp</dimen>
@@ -12,41 +18,50 @@
     <dimen name="mfRecyclerViewMovieTitleTextSize">15sp</dimen>
     <dimen name="mfRecyclerViewMovieYearTextSize">15sp</dimen>
     <!-- MainFragment RecyclerView end-->
+
     <!-- DetailsFragment begin -->
-    <dimen name="mainHeaderTextSize">30sp</dimen>
-    <dimen name="mainHeaderMarginTop">10dp</dimen>
-    <dimen name="movieDetailsPosterMarginTop">10dp</dimen>
-    <dimen name="movieInfoTableMarginHorizontal">10dp</dimen>
-    <dimen name="movieInfoTableMarginTop">20dp</dimen>
-    <dimen name="movieInfoTableMarginBottom">30dp</dimen>
-    <dimen name="movieInfoTableTextSize">15sp</dimen>
-    <dimen name="movieInfoTablePaddingHorizontal">20dp</dimen>
-    <dimen name="movieInfoScreenMarginHorizontal">20dp</dimen>
-    <dimen name="movieInfoScreenMarginBottom">50dp</dimen>
+    <dimen name="dfMovieTitleMarginHorizontal">10dp</dimen>
+    <dimen name="dfInterfaceContainerMarginHorizontal">10dp</dimen>
+    <dimen name="dfMovieTitleTextSize">30sp</dimen>
+    <dimen name="dfMovieTitleMarginTop">10dp</dimen>
+    <dimen name="dfMoviePosterMarginTop">10dp</dimen>
+    <dimen name="dfInterfaceContainerMarginTop">20dp</dimen>
+    <dimen name="dfInterfaceContainerMarginBottom">50dp</dimen>
+    <dimen name="dfMovieInfoTextSize">20sp</dimen>
+    <dimen name="dfMovieDataMarginStart">20dp</dimen>
+    <dimen name="dfNoteContainerMarginTop">40dp</dimen>
+    <dimen name="dfInfoScreenMarginBottom">50dp</dimen>
+    <dimen name="dfSaveNoteButtonMarginTop">0dp</dimen>
     <!-- DetailsFragment end -->
+
     <!-- HistoryFragment begin -->
+    <dimen name="hfMainHeaderMarginTop">10dp</dimen>
     <dimen name="hfRecyclerViewMarginTop">5dp</dimen>
-    <dimen name="historyHeaderTextSize">30sp</dimen>
-    <dimen name="adultContentSwitchMarginTop">20dp</dimen>
-    <dimen name="adultContentSwitchSwitchPadding">20dp</dimen>
+    <dimen name="hfMainHeaderTextSize">30sp</dimen>
+    <dimen name="hfDataContainerMarginHorizontal">5dp</dimen>
     <!-- HistoryFragment end -->
+
     <!-- HistoryFragment RecyclerView begin -->
-    <dimen name="hfRecyclerViewItemMargin">5dp</dimen>
+    <dimen name="hfRecyclerViewItemMarginVertical">5dp</dimen>
     <dimen name="hfRecyclerViewItemCardCornerRadius">3dp</dimen>
     <dimen name="hfRecyclerViewItemCardElevation">5dp</dimen>
     <dimen name="hfRecyclerViewDataContainerMargin">3dp</dimen>
     <dimen name="hfRecyclerViewItemTextSize">15sp</dimen>
     <!-- HistoryFragment RecyclerView end -->
+
     <!-- SettingsFragment begin -->
-    <dimen name="settingsHeaderTextSize">30sp</dimen>
-    <dimen name="settingsHeaderMarginTop">10dp</dimen>
-    <dimen name="adultContentSwitchHorizontalPadding">20dp</dimen>
-    <dimen name="adultContentSwitchTextSize">20sp</dimen>
+    <dimen name="sfDataContainerMarginHorizontal">5dp</dimen>
+    <dimen name="sfMainHeaderTextSize">30sp</dimen>
+    <dimen name="sfMainHeaderMarginTop">10dp</dimen>
+    <dimen name="sfAdultContentSwitchHorizontalPadding">20dp</dimen>
+    <dimen name="sfAdultContentSwitchTextSize">20sp</dimen>
+    <dimen name="sfAdultContentSwitchMarginTop">20dp</dimen>
+    <dimen name="sfAdultContentSwitchSwitchPadding">20dp</dimen>
     <!-- SettingsFragment end -->
-    <!-- ContactsFragment begin -->
-    <dimen name="contactsHeaderText">30sp</dimen>
-    <dimen name="contactsHeaderMarginTop">10dp</dimen>
-    <dimen name="contactsHeaderMarginBottom">20dp</dimen>
-    <dimen name="contactsTextSize">15sp</dimen>
-    <!-- ContactsFragment end -->
+
+    <!-- MapsFragment begin -->
+    <dimen name="mapfSearchStringMarginHorizontal">5dp</dimen>
+    <dimen name="mapfSearchButtonMarginHorizontal">5dp</dimen>
+    <!-- MapsFragment end -->
+
 </resources>

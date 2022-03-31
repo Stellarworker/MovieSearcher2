@@ -4,7 +4,7 @@
     android:id="@+id/hfRecyclerViewItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/hfRecyclerViewItemMargin"
+    android:layout_marginVertical="@dimen/hfRecyclerViewItemMarginVertical"
     app:cardCornerRadius="@dimen/hfRecyclerViewItemCardCornerRadius"
     app:cardElevation="@dimen/hfRecyclerViewItemCardElevation">
 
@@ -17,28 +17,31 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/hFRecyclerItemTitle"
+            android:id="@+id/hfRecyclerViewMovieTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/hfRecyclerViewItemTextSize"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/hFRecyclerItemReleaseDate"
+            android:id="@+id/hfRecyclerViewMovieYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/hfRecyclerViewItemTextSize" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/hFRecyclerItemTime"
+            android:id="@+id/hfRecyclerViewViewTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/hfRecyclerViewItemTextSize" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/hFRecyclerItemNote"
+            android:id="@+id/hfRecyclerViewNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
             android:textSize="@dimen/hfRecyclerViewItemTextSize"
             android:visibility="gone" />
 

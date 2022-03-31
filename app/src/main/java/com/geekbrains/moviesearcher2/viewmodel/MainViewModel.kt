@@ -4,11 +4,13 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.geekbrains.moviesearcher2.common.CORRUPTED_DATA
+import com.geekbrains.moviesearcher2.common.REQUEST_ERROR
+import com.geekbrains.moviesearcher2.common.SERVER_ERROR
 import com.geekbrains.moviesearcher2.model.MoviesDTO
 import com.geekbrains.moviesearcher2.repository.movies.MoviesRepository
 import com.geekbrains.moviesearcher2.repository.movies.MoviesRepositoryImpl
 import com.geekbrains.moviesearcher2.repository.movies.MoviesRemoteDataSource
-import com.geekbrains.moviesearcher2.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +18,8 @@ import retrofit2.Response
 @RequiresApi(Build.VERSION_CODES.N)
 class MainViewModel(
     val moviesLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val moviesRepositoryImpl: MoviesRepository = MoviesRepositoryImpl(MoviesRemoteDataSource())
+    private val moviesRepositoryImpl: MoviesRepository =
+        MoviesRepositoryImpl(MoviesRemoteDataSource())
 ) : ViewModel() {
 
     private val callBack = object : Callback<MoviesDTO> {
@@ -37,7 +40,9 @@ class MainViewModel(
         }
 
         private fun checkResponse(serverResponse: MoviesDTO) =
-            if (serverResponse.results?.size == 0 || serverResponse.results?.get(0) != null) {
+            if (serverResponse.results?.size == 0
+                || serverResponse.results?.get(0) != null
+            ) {
                 AppState.Success(serverResponse)
             } else {
                 AppState.Error(Throwable(CORRUPTED_DATA))

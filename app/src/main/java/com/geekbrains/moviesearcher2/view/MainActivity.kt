@@ -5,16 +5,13 @@ import android.content.IntentFilter
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import com.geekbrains.moviesearcher2.R
 import com.geekbrains.moviesearcher2.databinding.MainActivityBinding
 import com.geekbrains.moviesearcher2.utils.loadFragment
-import com.geekbrains.moviesearcher2.view.contacts.ContactsFragment
 import com.geekbrains.moviesearcher2.view.history.HistoryFragment
+import com.geekbrains.moviesearcher2.view.maps.MapsFragment
 import com.geekbrains.moviesearcher2.view.settings.SettingsFragment
-import okhttp3.internal.notifyAll
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,31 +33,28 @@ class MainActivity : AppCompatActivity() {
             )
         }
         registerReceiver(receiver, IntentFilter(Intent.ACTION_POWER_CONNECTED))
-        binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
-
+        binding.maBottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.itemMenuSettings -> loadFragment(
+                R.id.bottomMenuItemSettings -> loadFragment(
                     SettingsFragment.newInstance(),
                     SettingsFragment.FRAGMENT_TAG,
                     supportFragmentManager
                 )
-                R.id.itemMenuHistory -> loadFragment(
+                R.id.bottomMenuItemHistory -> loadFragment(
                     HistoryFragment.newInstance(),
                     HistoryFragment.FRAGMENT_TAG,
                     supportFragmentManager
                 )
-                R.id.itemMenuContacts -> loadFragment(
-                    ContactsFragment.newInstance(),
-                    ContactsFragment.FRAGMENT_TAG,
+                R.id.bottomMenuItemMaps -> loadFragment(
+                    MapsFragment.newInstance(),
+                    MapsFragment.FRAGMENT_TAG,
                     supportFragmentManager
                 )
-                R.id.itemMenuHome ->
-                    loadFragment(
-                        MainFragment.newInstance(),
-                        MainFragment.FRAGMENT_TAG,
-                        supportFragmentManager
-                    )
-
+                R.id.bottomMenuItemHome -> loadFragment(
+                    MainFragment.newInstance(),
+                    MainFragment.FRAGMENT_TAG,
+                    supportFragmentManager
+                )
                 else -> false
             }
         }
@@ -72,10 +66,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1) {
-            finish();
-        } else {
-            super.onBackPressed();
+        when (supportFragmentManager.backStackEntryCount) {
+            1 -> finish()
+            else -> super.onBackPressed()
         }
     }
 }
