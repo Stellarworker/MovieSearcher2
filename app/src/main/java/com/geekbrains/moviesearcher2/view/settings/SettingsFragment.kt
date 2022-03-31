@@ -7,7 +7,7 @@ import com.geekbrains.moviesearcher2.databinding.FragmentSettingsBinding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.geekbrains.moviesearcher2.utils.SHOW_ADULT_CONTENT
+import com.geekbrains.moviesearcher2.common.SHOW_ADULT_CONTENT
 
 class SettingsFragment : Fragment() {
 
@@ -25,14 +25,14 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         restoreAdultContentStatus()
-        binding.adultContentSwitch.setOnCheckedChangeListener { _, isChecked ->
+        binding.sfAdultContentSwitch.setOnCheckedChangeListener { _, isChecked ->
             saveAdultContentStatus(isChecked)
         }
     }
 
     private fun restoreAdultContentStatus() {
         activity?.let {
-            binding.adultContentSwitch.isChecked =
+            binding.sfAdultContentSwitch.isChecked =
                 it.getPreferences(Context.MODE_PRIVATE).getBoolean(SHOW_ADULT_CONTENT, false)
         }
     }

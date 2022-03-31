@@ -7,14 +7,6 @@ import com.geekbrains.moviesearcher2.model.MovieDetails
 import com.geekbrains.moviesearcher2.model.MovieDetailsInt
 import com.geekbrains.moviesearcher2.model.room.HistoryEntity
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import kotlin.math.max
-
-const val SERVER_ERROR = "Server error"
-const val REQUEST_ERROR = "Request error"
-const val CORRUPTED_DATA = "Corrupted data"
-const val SHOW_ADULT_CONTENT = "SHOW_ADULT_CONTENT"
-const val DATE_TIME_PATTERN = "dd.MM.yyyy, HH:mm:ss"
 
 fun makeIPAddress(baseAddress: String, posterSize: String, posterPath: String) =
     String.format(baseAddress, posterSize, posterPath)
@@ -70,17 +62,18 @@ fun convertMovieDetailsIntToHistoryEntity(movieDetailsInt: MovieDetailsInt) =
 fun convertMillisToDate(time: Long, pattern: String) =
     SimpleDateFormat(pattern).format(time)
 
-fun loadFragment(fragment: Fragment, fragmentTag: String, manager: FragmentManager) = run {
-    val fragmentPopped = manager.popBackStackImmediate(
-        fragmentTag,
-        0
-    );
-    if (!fragmentPopped &&
-        manager.findFragmentByTag(fragmentTag) == null
-    ) {
+fun loadFragment(
+    fragment: Fragment,
+    fragmentTag: String,
+    manager: FragmentManager,
+    containerID: Int = R.id.maFragmentContainer,
+    fragmentFlags: Int = 0
+) = run {
+    val fragmentPopped = manager.popBackStackImmediate(fragmentTag, fragmentFlags)
+    if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null) {
         manager.apply {
             beginTransaction()
-                .replace(R.id.fragmentContainer, fragment)
+                .replace(containerID, fragment)
                 .addToBackStack(fragmentTag)
                 .commitAllowingStateLoss()
         }
@@ -88,3 +81,5 @@ fun loadFragment(fragment: Fragment, fragmentTag: String, manager: FragmentManag
     true
 }
 
+fun substituteIfBlank(mainString: String, substString: String) =
+    mainString.ifBlank { substString }

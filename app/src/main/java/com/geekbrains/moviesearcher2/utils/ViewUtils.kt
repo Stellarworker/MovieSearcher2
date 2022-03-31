@@ -27,7 +27,7 @@ fun View.hide() {
     visibility = View.GONE
 }
 
-fun View.hideKeyboard() = ViewCompat.getWindowInsetsController(this)
-    ?.hide(WindowInsetsCompat.Type.ime())
+fun View.hideKeyboard() =
+    ViewCompat.getWindowInsetsController(this)?.hide(WindowInsetsCompat.Type.ime())
 
 

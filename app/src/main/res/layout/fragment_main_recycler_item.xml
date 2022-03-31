@@ -18,13 +18,13 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/mfRecyclerViewMoviePoster"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitCenter" />
+            android:scaleType="centerInside" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mfRecyclerViewMovieTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
@@ -34,8 +34,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mfRecyclerViewMovieYear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textSize="@dimen/mfRecyclerViewMovieYearTextSize" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

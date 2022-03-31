@@ -28,10 +28,11 @@ import com.geekbrains.moviesearcher2.viewmodel.DetailsViewModel
  * 5   "w780"
  * 6   "original"
  */
-private const val POSTER_SIZE = "w342"
+private const val POSTER_SIZE = "original"
 private const val HIDE_ALL = 0
 private const val SHOW_LOADING = 1
 private const val SHOW_DATA = 2
+private const val EMPTY_DETAIL = "none"
 
 class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
@@ -55,17 +56,14 @@ class DetailsFragment : Fragment() {
         detailsViewModel.movieDetailsLiveData.observe(viewLifecycleOwner) {
             renderData(it)
         }
-        binding.noteContainer.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                detailsViewModel.saveNoteToDb(s.toString())
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
+        binding.dfSaveNoteButton.setOnClickListener { button ->
+            button.hideKeyboard()
+            detailsViewModel.saveNoteToDb(binding.dfNoteContainer.text.toString())
+            binding.root.makeSnackbar(
+                text = getString(R.string.dfNoteSaved),
+                anchor = activity?.findViewById(R.id.maBottomNavigation)
+            )
+        }
     }
 
     private fun renderData(appStateDetails: AppStateDetails) {
@@ -77,9 +75,9 @@ class DetailsFragment : Fragment() {
             is AppStateDetails.Loading -> showLoading()
             is AppStateDetails.Error -> {
                 binding.root.makeSnackbar(
-                    text = appStateDetails.error.message ?: getString(R.string.errorLabelText),
-                    actionText = getString(R.string.reloadLabelText),
-                    anchor = activity?.findViewById(R.id.bottomNavigation),
+                    text = appStateDetails.error.message ?: getString(R.string.errorLoadingData),
+                    actionText = getString(R.string.reload),
+                    anchor = activity?.findViewById(R.id.maBottomNavigation),
                     action = {
                         detailsViewModel.getMovieDetails(detailsViewModel.getMovieID())
                     }
@@ -91,20 +89,26 @@ class DetailsFragment : Fragment() {
     private fun setDetails(details: MovieDetailsInt) {
         saveMovieDetailsInt(details)
         with(binding) {
-            movieTitleDataText.text = details.title
-            movieTaglineDataText.text = details.tagLine
-            movieGenreDataText.text = details.genres
-            movieReleaseDateDataText.text = details.releaseDate
-            movieVoteAverageDataText.text = details.voteAverage.toString()
+            dfMovieTitle.text = substituteIfBlank(details.title.trim(), EMPTY_DETAIL)
+            dfMovieTaglineData.text = substituteIfBlank(details.tagLine.trim(), EMPTY_DETAIL)
+            dfMovieGenreData.text = substituteIfBlank(details.genres.trim(), EMPTY_DETAIL)
+            dfMovieReleaseDateData.text = substituteIfBlank(
+                details.releaseDate.trim(),
+                EMPTY_DETAIL
+            )
+            dfMovieVoteAverageData.text = substituteIfBlank(
+                details.voteAverage.toString().trim(),
+                EMPTY_DETAIL
+            )
         }
-        binding.movieDetailsPoster.load(
+        binding.dfNoteContainer.setText(details.note)
+        binding.dfMoviePoster.load(
             makeIPAddress(
                 resources.getString(R.string.baseMovieAddressString),
                 POSTER_SIZE,
                 details.posterPath
             )
         )
-        binding.noteContainer.setText(details.note)
         showData()
     }
 
@@ -124,16 +128,16 @@ class DetailsFragment : Fragment() {
         with(binding) {
             when (mode) {
                 HIDE_ALL -> {
-                    dFIncludedLoadingLayout.loadingLayout.hide()
-                    movieDetailsScrollContainer.hide()
+                    dfIncludedLoadingLayout.loadingLayout.hide()
+                    dfDataContainer.hide()
                 }
                 SHOW_LOADING -> {
-                    dFIncludedLoadingLayout.loadingLayout.show()
-                    movieDetailsScrollContainer.hide()
+                    dfIncludedLoadingLayout.loadingLayout.show()
+                    dfDataContainer.hide()
                 }
                 else -> {
-                    dFIncludedLoadingLayout.loadingLayout.hide()
-                    movieDetailsScrollContainer.show()
+                    dfIncludedLoadingLayout.loadingLayout.hide()
+                    dfDataContainer.show()
                 }
             }
         }

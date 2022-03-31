@@ -1,8 +1,14 @@
 package com.geekbrains.moviesearcher2.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.geekbrains.moviesearcher2.app.App.Companion.getHistoryDao
+import com.geekbrains.moviesearcher2.common.CORRUPTED_DATA
+import com.geekbrains.moviesearcher2.common.EMPTY_STRING
+import com.geekbrains.moviesearcher2.common.REQUEST_ERROR
+import com.geekbrains.moviesearcher2.common.SERVER_ERROR
+import com.geekbrains.moviesearcher2.config.DEBUG_MODE
 import com.geekbrains.moviesearcher2.model.MovieDetails
 import com.geekbrains.moviesearcher2.model.MovieDetailsInt
 import com.geekbrains.moviesearcher2.repository.details.MovieDetailsRemoteDataSource
@@ -13,12 +19,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.geekbrains.moviesearcher2.utils.*
+import java.io.IOException
+
+private const val TAG = "DETAILS_VIEW_MODEL"
 
 class DetailsViewModel(
     val movieDetailsLiveData: MutableLiveData<AppStateDetails> = MutableLiveData(),
-    private val movieDetailsRepositoryImpl: MovieDetailsRepository = MovieDetailsRepositoryImpl(
-        MovieDetailsRemoteDataSource()
-    ),
+    private val movieDetailsRepositoryImpl: MovieDetailsRepository =
+        MovieDetailsRepositoryImpl(MovieDetailsRemoteDataSource()),
     private val historyRepositoryImpl: LocalRepositoryImpl = LocalRepositoryImpl(getHistoryDao())
 ) : ViewModel() {
 
@@ -27,13 +35,22 @@ class DetailsViewModel(
 
         override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
             val serverResponse: MovieDetails? = response.body()
-            movieDetailsLiveData.postValue(
-                if (response.isSuccessful && serverResponse != null) {
-                    checkResponse(serverResponse)
-                } else {
-                    AppStateDetails.Error(Throwable(SERVER_ERROR))
+            Thread {
+                try {
+                    movieDetailsLiveData.postValue(
+                        if (response.isSuccessful && serverResponse != null) {
+                            checkResponse(serverResponse)
+                        } else {
+                            AppStateDetails.Error(Throwable(SERVER_ERROR))
+                        }
+                    )
+                } catch (e: IOException) {
+                    if (DEBUG_MODE) {
+                        e.printStackTrace()
+                        e.message?.let { message -> Log.d(TAG, message) }
+                    }
                 }
-            )
+            }.start()
         }
 
         override fun onFailure(call: Call<MovieDetails>, t: Throwable) {
@@ -48,7 +65,9 @@ class DetailsViewModel(
 
         private fun checkResponse(serverResponse: MovieDetails) =
             if (serverResponse.title != null) {
-                AppStateDetails.Success(convertMovieDetailsToMovieDetailsInt(serverResponse))
+                val movieDetailsInt = convertMovieDetailsToMovieDetailsInt(serverResponse)
+                movieDetailsInt.note = getNote(movieID) ?: EMPTY_STRING
+                AppStateDetails.Success(movieDetailsInt)
             } else {
                 AppStateDetails.Error(Throwable(CORRUPTED_DATA))
             }
@@ -64,11 +83,13 @@ class DetailsViewModel(
 
     fun saveMovieDetailsIntToDB(movieDetailsInt: MovieDetailsInt) {
         movieDetailsInt.viewTime = System.currentTimeMillis()
-        historyRepositoryImpl.saveEntity(movieDetailsInt)
+        historyRepositoryImpl.saveDetails(movieDetailsInt)
     }
 
     fun saveNoteToDb(note: String) {
-        historyRepositoryImpl.saveNote(note)
+        historyRepositoryImpl.updateNote(movieID, note)
     }
+
+    fun getNote(movieID: Int) = historyRepositoryImpl.getNote(movieID)
 
 }
