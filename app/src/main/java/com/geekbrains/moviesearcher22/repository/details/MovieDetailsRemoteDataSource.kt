@@ -7,9 +7,11 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+private const val BASE_URL = "https://api.themoviedb.org/3/search/movie/"
+
 class MovieDetailsRemoteDataSource {
     private val movieDetailsApi = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/3/search/movie/")
+        .baseUrl(BASE_URL)
         .addConverterFactory(
             GsonConverterFactory.create(GsonBuilder().setLenient().create())
         )

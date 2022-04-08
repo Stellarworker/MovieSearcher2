@@ -9,6 +9,9 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
+private const val CHANNEL_NAME = "Channel name"
+private const val CHANNEL_DESCRIPTION = "Channel description"
+
 class MainFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
@@ -53,8 +56,8 @@ class MainFirebaseMessagingService : FirebaseMessagingService() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManager: NotificationManager) {
-        val name = "Channel name"
-        val descriptionText = "Channel description"
+        val name = CHANNEL_NAME
+        val descriptionText = CHANNEL_DESCRIPTION
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(CHANNEL_ID, name, importance)
             .apply {

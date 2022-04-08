@@ -7,10 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearcher22.R
 import com.geekbrains.moviesearcher22.common.DATE_TIME_PATTERN
+import com.geekbrains.moviesearcher22.common.EMPTY_STRING
 import com.geekbrains.moviesearcher22.model.MovieDetailsInt
 import com.geekbrains.moviesearcher22.utils.convertMillisToDate
 import com.geekbrains.moviesearcher22.utils.convertReleaseDateToYear
 import com.geekbrains.moviesearcher22.utils.show
+
+private const val DROP_COUNT = 1
 
 class HistoryAdapter(
     private var onItemViewClickListener: OnItemViewClickListener?
@@ -35,7 +38,8 @@ class HistoryAdapter(
                     findViewById<TextView>(R.id.hfRecyclerViewMovieYear).text =
                         String.format(
                             resources.getString(R.string.hfRecyclerViewItemYear),
-                            convertReleaseDateToYear(data.releaseDate).drop(1).dropLast(1)
+                            convertReleaseDateToYear(data.releaseDate)
+                                .drop(DROP_COUNT).dropLast(DROP_COUNT)
                         )
                     findViewById<TextView>(R.id.hfRecyclerViewViewTime).text =
                         String.format(
@@ -44,7 +48,7 @@ class HistoryAdapter(
                                 data.viewTime, DATE_TIME_PATTERN
                             )
                         )
-                    if (data.note != "") {
+                    if (data.note != EMPTY_STRING) {
                         findViewById<TextView>(R.id.hfRecyclerViewNote).apply {
                             text = String.format(
                                 resources.getString(R.string.hfRecyclerViewItemNote),
