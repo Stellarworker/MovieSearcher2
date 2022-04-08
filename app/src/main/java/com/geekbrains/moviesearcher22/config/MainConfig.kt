@@ -1,6 +1,8 @@
 package com.geekbrains.moviesearcher22.config
 
-const val DEBUG_MODE = true
+import com.geekbrains.moviesearcher22.BuildConfig
+
+const val DEBUG_MODE = (BuildConfig.BUILD_TYPE == "debug")
 const val DB_NAME = "History.db"
 /**
  * poster_sizes

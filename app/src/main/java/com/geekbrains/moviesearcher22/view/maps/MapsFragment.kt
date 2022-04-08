@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.geekbrains.moviesearcher22.R
+import com.geekbrains.moviesearcher22.common.EMPTY_DOUBLE
 import com.geekbrains.moviesearcher22.common.EMPTY_STRING
+import com.geekbrains.moviesearcher22.common.ZERO_DOUBLE
+import com.geekbrains.moviesearcher22.common.ZERO_INT
 import com.geekbrains.moviesearcher22.databinding.FragmentMapsBinding
 import com.geekbrains.moviesearcher22.utils.hideKeyboard
 import com.geekbrains.moviesearcher22.utils.makeSnackbar
@@ -24,6 +27,11 @@ private const val COORDINATES_DELIMITER = ","
 private const val INITIAL_MARKER_TITLE = "Marker in Moscow"
 private const val INITIAL_LATITUDE = 55.753896
 private const val INITIAL_LONGITUDE = 37.620628
+private const val MAX_RESULTS = 1
+private const val DEFAULT_MAP_ZOOM = 15f
+private const val MAX_ARRAY_SIZE = 2
+private const val FIRST = 0
+private const val SECOND = 1
 
 class MapsFragment : Fragment() {
 
@@ -85,10 +93,10 @@ class MapsFragment : Fragment() {
                 val addresses = geoCoder.getFromLocation(
                     location.latitude,
                     location.longitude,
-                    1
+                    MAX_RESULTS
                 )
-                val geoTitle = if (addresses != null && addresses.size > 0)
-                    addresses[0].getAddressLine(0) else location.toString()
+                val geoTitle = if (addresses != null && addresses.size > ZERO_INT)
+                    addresses[ZERO_INT].getAddressLine(ZERO_INT) else location.toString()
                 view.post {
                     goToAddress(location, geoTitle, moveCamera)
                     view.makeSnackbar(
@@ -106,13 +114,13 @@ class MapsFragment : Fragment() {
         Thread {
             try {
                 val geoCoder = Geocoder(view.context)
-                val addresses = geoCoder.getFromLocationName(query, 1)
+                val addresses = geoCoder.getFromLocationName(query, MAX_RESULTS)
                 when {
-                    addresses.size > 0 -> view.post {
+                    addresses.size > ZERO_INT -> view.post {
                         goToAddress(
                             LatLng(
-                                addresses[0].latitude,
-                                addresses[0].longitude
+                                addresses[ZERO_INT].latitude,
+                                addresses[ZERO_INT].longitude
                             ),
                             query
                         )
@@ -134,17 +142,17 @@ class MapsFragment : Fragment() {
 
     private fun isCoordinates(query: String): Boolean {
         val strings = query.split(COORDINATES_DELIMITER).toTypedArray()
-        return (strings.size == 2)
-                && (strings[0].toDoubleOrNull() != null)
-                && (strings[1].toDoubleOrNull() != null)
+        return (strings.size == MAX_ARRAY_SIZE)
+                && (strings[FIRST].toDoubleOrNull() != null)
+                && (strings[SECOND].toDoubleOrNull() != null)
     }
 
     private fun convertStringToCoordinates(query: String): LatLng {
         val strings = query.split(COORDINATES_DELIMITER).toTypedArray().toMutableList()
         strings.add(EMPTY_STRING)
         return LatLng(
-            strings[0].toDoubleOrNull() ?: 0.0,
-            strings[1].toDoubleOrNull() ?: 0.0
+            strings[FIRST].toDoubleOrNull() ?: ZERO_DOUBLE,
+            strings[SECOND].toDoubleOrNull() ?: ZERO_DOUBLE
         )
     }
 
@@ -152,7 +160,7 @@ class MapsFragment : Fragment() {
         map.clear()
         setMarker(location, query)
         if (moveCamera) {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, DEFAULT_MAP_ZOOM))
         }
     }
 

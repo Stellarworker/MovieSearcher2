@@ -10,9 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
+import com.geekbrains.moviesearcher22.BuildConfig
 import com.geekbrains.moviesearcher22.R
 import com.geekbrains.moviesearcher22.common.EMPTY_STRING
 import com.geekbrains.moviesearcher22.common.SHOW_ADULT_CONTENT
+import com.geekbrains.moviesearcher22.common.ZERO_INT
 import com.geekbrains.moviesearcher22.databinding.MainFragmentBinding
 import com.geekbrains.moviesearcher22.model.MovieDTO
 import com.geekbrains.moviesearcher22.utils.*
@@ -21,7 +23,7 @@ import com.geekbrains.moviesearcher22.viewmodel.AppState
 import com.geekbrains.moviesearcher22.viewmodel.DetailsViewModel
 import com.geekbrains.moviesearcher22.viewmodel.MainViewModel
 
-private const val MAIN_FRAGMENT_RECYCLE_VIEW_SPAN_COUNT = 3
+private const val RECYCLE_VIEW_SPAN_COUNT = 3
 
 @RequiresApi(Build.VERSION_CODES.N)
 class MainFragment : Fragment() {
@@ -62,7 +64,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.mfIncludedLoadingLayout.loadingLayout.hide()
         binding.mfRecyclerView.layoutManager =
-            GridLayoutManager(context, MAIN_FRAGMENT_RECYCLE_VIEW_SPAN_COUNT)
+            GridLayoutManager(context, RECYCLE_VIEW_SPAN_COUNT)
         activity?.let {
             includeAdult =
                 it.getPreferences(Context.MODE_PRIVATE).getBoolean(SHOW_ADULT_CONTENT, false)
@@ -100,7 +102,7 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 binding.mfIncludedLoadingLayout.loadingLayout.hide()
                 when (appState.movieData.results?.size) {
-                    0 -> binding.root.makeSnackbar(
+                    ZERO_INT -> binding.root.makeSnackbar(
                         text = getString(R.string.nothingFound),
                         anchor = activity?.findViewById(R.id.maBottomNavigation)
                     )

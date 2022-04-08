@@ -5,11 +5,16 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+private const val URL = "https://api.themoviedb.org/3/search/movie"
+private const val API_KEY = "api_key"
+private const val INCLUDE_ADULT = "include_adult"
+private const val QUERY = "query"
+
 interface MoviesAPI {
-    @GET("https://api.themoviedb.org/3/search/movie")
+    @GET(URL)
     fun getMovies(
-        @Query("api_key") apiKey: String,
-        @Query("include_adult") includeAdult: Boolean,
-        @Query("query") query: String,
+        @Query(API_KEY) apiKey: String,
+        @Query(INCLUDE_ADULT) includeAdult: Boolean,
+        @Query(QUERY) query: String,
     ): Call<MoviesDTO>
 }

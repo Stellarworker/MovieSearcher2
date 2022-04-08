@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.geekbrains.moviesearcher22.R
+import com.geekbrains.moviesearcher22.common.ZERO_INT
 import com.geekbrains.moviesearcher22.config.MAIN_POSTER_SIZE
 import com.geekbrains.moviesearcher22.model.MovieDTO
 import com.geekbrains.moviesearcher22.model.MoviesDTO
@@ -16,7 +17,7 @@ import com.geekbrains.moviesearcher22.utils.makeIPAddress
 
 class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
-    private var movieData: MoviesDTO = MoviesDTO(0, listOf())
+    private var movieData: MoviesDTO = MoviesDTO(ZERO_INT, listOf())
 
     fun setMovie(data: MoviesDTO) {
         movieData = data
@@ -65,5 +66,5 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
         }
     }
 
-    override fun getItemCount() = movieData.results?.size ?: 0
+    override fun getItemCount() = movieData.results?.size ?: ZERO_INT
 }

@@ -6,10 +6,14 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+private const val URL = "https://api.themoviedb.org/3/movie/{id}"
+private const val ID = "id"
+private const val API_KEY = "api_key"
+
 interface MovieDetailsAPI {
-    @GET("https://api.themoviedb.org/3/movie/{id}")
+    @GET(URL)
     fun getMovieDetails(
-        @Path("id") id: Int,
-        @Query("api_key") apiKey: String
+        @Path(ID) id: Int,
+        @Query(API_KEY) apiKey: String
     ): Call<MovieDetails>
 }

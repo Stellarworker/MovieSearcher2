@@ -13,6 +13,8 @@ import com.geekbrains.moviesearcher22.view.history.HistoryFragment
 import com.geekbrains.moviesearcher22.view.maps.MapsFragment
 import com.geekbrains.moviesearcher22.view.settings.SettingsFragment
 
+private const val BACKSTACK_ENTRY_COUNT = 1
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
@@ -67,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         when (supportFragmentManager.backStackEntryCount) {
-            1 -> finish()
+            BACKSTACK_ENTRY_COUNT -> finish()
             else -> super.onBackPressed()
         }
     }

@@ -19,9 +19,20 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            Properties signProperties = new Properties()
+            signProperties.load(file("/home/main/Keys/Android/moviesearch2.properties").newDataInputStream())
+            storeFile file(signProperties.getProperty("keystore", ""))
+            storePassword signProperties.getProperty("keystorePassword", "")
+            keyAlias signProperties.getProperty("keyAlias", "")
+            keyPassword signProperties.getProperty("keyPassword", "")
+        }
+    }
+
     buildTypes.each {
         Properties properties = new Properties()
-        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        properties.load(file("/home/main/Keys/TMDB/apikey.properties").newDataInputStream())
         def apiKey = properties.getProperty("themoviedb_api_key", "")
         it.buildConfigField "String", "THEMOVIEDB_API_KEY", apiKey
     }
@@ -31,10 +42,25 @@ android {
     }
 
     buildTypes {
+
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "TYPE", '"RELEASE"'
         }
+
+        debug {
+            versionNameSuffix "-debug"
+            buildConfigField "String", "TYPE", '"DEBUG"'
+        }
+
+        beta {
+            initWith debug
+            versionNameSuffix "-beta"
+            buildConfigField "String", "TYPE", '"BETA"'
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

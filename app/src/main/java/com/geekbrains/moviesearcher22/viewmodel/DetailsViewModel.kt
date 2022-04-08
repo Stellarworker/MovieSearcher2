@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.geekbrains.moviesearcher22.app.App.Companion.getHistoryDao
-import com.geekbrains.moviesearcher22.common.CORRUPTED_DATA
-import com.geekbrains.moviesearcher22.common.EMPTY_STRING
-import com.geekbrains.moviesearcher22.common.REQUEST_ERROR
-import com.geekbrains.moviesearcher22.common.SERVER_ERROR
+import com.geekbrains.moviesearcher22.common.*
 import com.geekbrains.moviesearcher22.config.DEBUG_MODE
 import com.geekbrains.moviesearcher22.model.MovieDetails
 import com.geekbrains.moviesearcher22.model.MovieDetailsInt
@@ -30,7 +27,7 @@ class DetailsViewModel(
     private val historyRepositoryImpl: LocalRepositoryImpl = LocalRepositoryImpl(getHistoryDao())
 ) : ViewModel() {
 
-    private var movieID = -1
+    private var movieID = EMPTY_INT
     private val callBack = object : Callback<MovieDetails> {
 
         override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {

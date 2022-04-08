@@ -1,6 +1,7 @@
 package com.geekbrains.moviesearcher22.repository.local
 
 import android.util.Log
+import com.geekbrains.moviesearcher22.common.ZERO_INT
 import com.geekbrains.moviesearcher22.config.DEBUG_MODE
 import com.geekbrains.moviesearcher22.model.MovieDetailsInt
 import com.geekbrains.moviesearcher22.model.room.HistoryDao
@@ -31,7 +32,7 @@ class LocalRepositoryImpl(private val localDataSource: HistoryDao) : LocalReposi
         Thread {
             try {
                 when (localDataSource.getRecordsCount(movieDetailsInt.movieId)) {
-                    0 -> localDataSource.insert(
+                    ZERO_INT -> localDataSource.insert(
                         convertMovieDetailsIntToHistoryEntity(movieDetailsInt)
                     )
                     else -> localDataSource.updateViewTime(

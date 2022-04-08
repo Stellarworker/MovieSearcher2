@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.geekbrains.moviesearcher22.common.CORRUPTED_DATA
 import com.geekbrains.moviesearcher22.common.REQUEST_ERROR
 import com.geekbrains.moviesearcher22.common.SERVER_ERROR
+import com.geekbrains.moviesearcher22.common.ZERO_INT
 import com.geekbrains.moviesearcher22.model.MoviesDTO
 import com.geekbrains.moviesearcher22.repository.movies.MoviesRepository
 import com.geekbrains.moviesearcher22.repository.movies.MoviesRepositoryImpl
@@ -40,8 +41,8 @@ class MainViewModel(
         }
 
         private fun checkResponse(serverResponse: MoviesDTO) =
-            if (serverResponse.results?.size == 0
-                || serverResponse.results?.get(0) != null
+            if (serverResponse.results?.size == ZERO_INT
+                || serverResponse.results?.get(ZERO_INT) != null
             ) {
                 AppState.Success(serverResponse)
             } else {
